@@ -20,16 +20,9 @@
     </StackPanel>
 </local:MyCard>
 
-<local:MyCard Title="在线玩家 (4)" Margin="0,0,0,15" CanSwap="True" IsSwapped="False">
+<local:MyCard Title="在线玩家" Margin="0,0,0,15" CanSwap="True">
     <StackPanel Margin="25,40,23,15">
-            <TextBlock TextWrapping="Wrap" Margin="0,0,0,2"
-                       Text="Kanami_dog  ·  上线于 2026/6/21 04:53" />
-            <TextBlock TextWrapping="Wrap" Margin="0,0,0,2"
-                       Text="lambda_ady360  ·  上线于 2026/6/21 04:33" />
-            <TextBlock TextWrapping="Wrap" Margin="0,0,0,2"
-                       Text="Mcxiaoliu1908  ·  上线于 2026/6/21 04:57" />
-            <TextBlock TextWrapping="Wrap" Margin="0,0,0,2"
-                       Text="Noctiro  ·  上线于 2026/6/20 18:59" />
+        <TextBlock TextWrapping="Wrap" Text="已获取在线人数，但暂无详细玩家列表" />
     </StackPanel>
 </local:MyCard>
 <local:MyCard Title="公告" Margin="0,0,0,15" CanSwap="True">
