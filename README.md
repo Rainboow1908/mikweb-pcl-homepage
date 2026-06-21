@@ -14,7 +14,15 @@ Mik Casual 服务器的 PCL 启动器自定义主页。
 
 ### 启动
 
-双击 `start.bat`（最小化窗口运行）。
+双击 `start.bat`（最小化运行）。关闭窗口即停止。
+
+### 开机自启
+
+右键 `install-startup.bat` → **以管理员身份运行**（仅需一次）。之后每次开机会自动最小化启动。
+
+### 取消开机自启
+
+双击 `uninstall-startup.bat`。
 
 ---
 
