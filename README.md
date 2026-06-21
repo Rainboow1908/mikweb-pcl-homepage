@@ -1,44 +1,36 @@
 # MikWeb PCL 主页
 
-Mik Casual 服务器的 PCL 启动器自定义主页。
+Mik Casual 服务器的 PCL 启动器自定义主页，实时显示在线玩家、公告、封禁列表等数据。
 
 ---
 
-## 🚀 本地部署（推荐）
+## 安装 Node.js
 
-电脑开着就能用，数据实时拉取 MikWeb API，无延迟。
-
-### 前置要求
-
-- [Node.js](https://nodejs.org) 安装（LTS 版本即可）
-
-### 启动
-
-双击 `start.bat`（最小化运行）。关闭窗口即停止。
-
-### 开机自启
-
-右键 `install-startup.bat` → **以管理员身份运行**（仅需一次）。之后每次开机会自动最小化启动。
-
-### 取消开机自启
-
-双击 `uninstall-startup.bat`。
+1. 打开 https://nodejs.org
+2. 下载 **LTS** 版本（左边绿色按钮）
+3. 运行安装程序，一路点 Next，全部默认即可
+4. 安装完后打开 CMD，输入 `node -v` 验证，显示版本号即成功
 
 ---
 
-## 🌐 在线版（备选）
+## 使用
 
-无需本地运行，数据由 GitHub Actions 定时更新。
+| 文件 | 操作 |
+|------|------|
+| `start.bat` | 双击启动服务器（最小化窗口） |
+| `stop.bat` | 双击停止服务器 |
+| `install-startup.bat` | 右键 → **以管理员身份运行**，开机自动启动 |
+| `uninstall-startup.bat` | 双击取消开机自启 |
+
+## PCL 配置
+
+**设置 → 个性化 → 主页 → 联网更新的下载地址**
 
 ```
-https://rainboow1908.github.io/mikweb-pcl-homepage/Custom.xaml
+http://localhost:38080/pcl-homepage.xaml
 ```
 
-> 手动触发更新：https://github.com/Rainboow1908/mikweb-pcl-homepage/actions/workflows/update.yml → **Run workflow**
-
----
-
-## 环境变量
+## 环境变量（可选）
 
 | 变量 | 默认值 | 说明 |
 |------|--------|------|
@@ -47,9 +39,20 @@ https://rainboow1908.github.io/mikweb-pcl-homepage/Custom.xaml
 | `SERVER_ADDR` | `noctiro.moe` | MC 服务器连接地址 |
 
 ```powershell
-# 示例：改端口和服务器地址
-$env:PORT="12345"; $env:SERVER_ADDR="play.example.com"; node server.js
+# 示例：改端口
+$env:PORT="12345"
+node server.js
 ```
+
+---
+
+## 在线版（备选，无需本地运行）
+
+```
+https://rainboow1908.github.io/mikweb-pcl-homepage/Custom.xaml
+```
+
+> 手动触发更新：https://github.com/Rainboow1908/mikweb-pcl-homepage/actions
 
 ---
 
