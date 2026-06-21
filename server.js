@@ -169,50 +169,58 @@ async function buildXAML() {
     statusColor = "#55FF55";
   }
 
-  // 公告卡片
+  // 公告卡片 — 单个可折叠卡片内含全部公告
   let annCards = "";
   if (anns.length > 0) {
-    annCards = anns
+    const items = anns
       .map(
         (a, i) =>
-          `<local:MyCard Title="公告 ${i + 1}" Margin="0,0,0,10" CanSwap="True">
-    <StackPanel Margin="25,15,23,15">
-        <TextBlock TextWrapping="Wrap" Margin="0,0,0,4"
-                   Text="${esc(a.content || "")}" />
-        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888888"
-                   Text="${esc(fmtTime(a.timestamp))}" />
-    </StackPanel>
-</local:MyCard>`,
+          `            <StackPanel Margin="0,${i > 0 ? "12" : "0"},0,0">
+                <TextBlock TextWrapping="Wrap" Margin="0,0,0,4"
+                           Text="${esc(a.content || "")}" />
+                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888888"
+                           Text="${esc(fmtTime(a.timestamp))}" />
+            </StackPanel>`,
       )
       .join("\n");
+    annCards = `<local:MyCard Title="公告 (${anns.length})" Margin="0,0,0,15" CanSwap="True" IsSwapped="False">
+    <StackPanel Margin="25,40,23,15">
+${items}
+    </StackPanel>
+</local:MyCard>`;
   } else {
-    annCards = `<local:MyCard Title="公告" Margin="0,0,0,10" CanSwap="True">
+    annCards = `<local:MyCard Title="公告" Margin="0,0,0,15" CanSwap="True">
     <StackPanel Margin="25,15,23,15">
         <TextBlock TextWrapping="Wrap" Text="暂无公告" Foreground="#888888" />
     </StackPanel>
 </local:MyCard>`;
   }
 
-  // 封禁列表卡片
+  // 封禁列表 — 单个可折叠卡片内含全部封禁
   let banCards = "";
   if (bans && bans.length > 0) {
-    banCards = bans
+    const items = bans
       .map(
-        (b) =>
-          `<local:MyCard Title="封禁: ${esc(b.playerName || "?")}" Margin="0,0,0,10" CanSwap="True">
-    <StackPanel Margin="25,15,23,15">
-        <TextBlock TextWrapping="Wrap" Margin="0,0,0,4"
-                   Text="原因：${esc(b.reason || "无")}" />
-        <TextBlock TextWrapping="Wrap" Margin="0,0,0,4" FontSize="11" Foreground="#888888"
-                   Text="执行者：${esc(b.bannedBy || "?")}  ·  ${esc(fmtTime(b.bannedAt))}" />
-        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="${b.isPermanent ? "#FF5555" : "#FFAA00"}"
-                   Text="${b.isPermanent ? "永久封禁" : "过期时间：" + esc(fmtTime(b.expiresAt || "?"))}" />
-    </StackPanel>
-</local:MyCard>`,
+        (b, i) =>
+          `            <StackPanel Margin="0,${i > 0 ? "12" : "0"},0,0">
+                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,4"
+                           Text="${esc(b.playerName || "?")}" />
+                <TextBlock TextWrapping="Wrap" Margin="0,0,0,2"
+                           Text="原因：${esc(b.reason || "无")}" />
+                <TextBlock TextWrapping="Wrap" Margin="0,0,0,2" FontSize="11" Foreground="#888888"
+                           Text="执行者：${esc(b.bannedBy || "?")}  ·  ${esc(fmtTime(b.bannedAt))}" />
+                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="${b.isPermanent ? "#FF5555" : "#FFAA00"}"
+                           Text="${b.isPermanent ? "永久封禁" : "过期时间：" + esc(fmtTime(b.expiresAt || "?"))}" />
+            </StackPanel>`,
       )
       .join("\n");
+    banCards = `<local:MyCard Title="封禁列表 (${bans.length})" Margin="0,0,0,15" CanSwap="True" IsSwapped="False">
+    <StackPanel Margin="25,40,23,15">
+${items}
+    </StackPanel>
+</local:MyCard>`;
   } else {
-    banCards = `<local:MyCard Title="封禁列表" Margin="0,0,0,10" CanSwap="True">
+    banCards = `<local:MyCard Title="封禁列表" Margin="0,0,0,15" CanSwap="True">
     <StackPanel Margin="25,15,23,15">
         <TextBlock TextWrapping="Wrap" Text="暂无封禁记录" Foreground="#55FF55" />
     </StackPanel>
