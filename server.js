@@ -295,9 +295,9 @@ ${items}
             ${launchBtn}
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,0">
-            <local:MyButton Margin="0,0,10,0" Width="90" Height="35" Padding="13,0,13,0"
+            <local:MyButton Margin="0,0,10,0" Width="125" Height="42" Padding="13,0,13,0"
                         Text="刷新" EventType="刷新主页" />
-            <local:MyButton Margin="0,0,10,0" Width="90" Height="35" Padding="13,0,13,0"
+            <local:MyButton Margin="0,0,0,0" Width="125" Height="42" Padding="13,0,13,0"
                         Text="复制 IP" EventType="复制文本" EventData="${esc(SERVER_ADDR)}" />
         </StackPanel>
     </StackPanel>
