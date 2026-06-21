@@ -1,6 +1,8 @@
 name: Update Custom.xaml
 
 on:
+  schedule:
+    - cron: "*/5 * * * *"
   workflow_dispatch:
   push:
     paths:
@@ -12,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      actions: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -31,10 +32,3 @@ jobs:
             git commit -m "auto: update Custom.xaml [skip ci]"
             git push
           fi
-      - name: Schedule next run (5 min later)
-        if: github.event_name != 'schedule' && success()
-        run: |
-          sleep 300
-          gh workflow run update.yml --ref main
-        env:
-          GH_TOKEN: ${{ github.token }}
