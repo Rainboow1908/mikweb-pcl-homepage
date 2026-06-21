@@ -19,80 +19,88 @@ const PORT = parseInt(process.env.PORT || "38080", 10);
 const API_BASE = process.env.API_BASE || "https://mik.noctiro.moe/api";
 const SERVER_ADDR = process.env.SERVER_ADDR || "mik.noctiro.moe";
 
-// ── 工具: JSON fetch ──────────────────────────────────────────────
+// ── 工具: JSON fetch + 缓存 ──────────────────────────────────────
 
-/** GET JSON from the MikWeb API (handles both http and https). */
+const API_TIMEOUT = 5000; // 单个 API 最多等 5 秒
+
+/** GET JSON from the MikWeb API. */
 function fetchJSON(url) {
   return new Promise((resolve, reject) => {
     const mod = url.startsWith("https") ? https : http;
-    mod
-      .get(url, { timeout: 8000 }, (res) => {
-        let body = "";
-        res.on("data", (c) => (body += c));
-        res.on("end", () => {
-          try {
-            resolve(JSON.parse(body));
-          } catch {
-            reject(new Error(`Invalid JSON: ${body.slice(0, 200)}`));
-          }
-        });
-      })
-      .on("error", reject)
-      .on("timeout", function () {
-        this.destroy();
-        reject(new Error("Request timeout"));
+    const req = mod.get(url, { timeout: API_TIMEOUT }, (res) => {
+      // 非 2xx 也算失败，不存缓存
+      if (res.statusCode < 200 || res.statusCode >= 300) {
+        req.destroy();
+        reject(new Error(`HTTP ${res.statusCode}`));
+        return;
+      }
+      let body = "";
+      res.on("data", (c) => (body += c));
+      res.on("end", () => {
+        try {
+          resolve(JSON.parse(body));
+        } catch {
+          reject(new Error(`Invalid JSON: ${body.slice(0, 200)}`));
+        }
       });
+    });
+    req.on("error", reject);
+    req.on("timeout", () => {
+      req.destroy();
+      reject(new Error("timeout"));
+    });
   });
+}
+
+// 内存缓存：存上次成功的数据，API 挂掉时用
+const cache = new Map();
+
+/** 带缓存的数据获取：成功时更新缓存，失败时用旧数据 */
+async function fetchWithCache(key, url, fallback) {
+  try {
+    const data = await fetchJSON(url);
+    cache.set(key, { data, time: Date.now() });
+    return data;
+  } catch (e) {
+    const stale = cache.get(key);
+    if (stale) {
+      console.log(`[cache] ${key} 使用缓存 (${Math.round((Date.now() - stale.time) / 1000)}s 前)`);
+      return stale.data;
+    }
+    console.log(`[cache] ${key} 无缓存，API 失败: ${e.message}`);
+    return fallback;
+  }
 }
 
 // ── 数据获取 ─────────────────────────────────────────────────────
 
 async function getOnlinePlayers() {
-  try {
-    const data = await fetchJSON(`${API_BASE}/players/online`);
-    return data;
-  } catch (e) {
-    return { online: -1, players: [], error: e.message };
-  }
+  const data = await fetchWithCache(
+    "online",
+    `${API_BASE}/players/online`,
+    { online: -1, players: [] },
+  );
+  return data;
 }
 
 async function getAnnouncements(count = 5) {
-  try {
-    const list = await fetchJSON(`${API_BASE}/announcements`);
-    return Array.isArray(list) ? list.slice(0, count) : [];
-  } catch {
-    return [];
-  }
+  const list = await fetchWithCache("announcements", `${API_BASE}/announcements`, []);
+  return Array.isArray(list) ? list.slice(0, count) : [];
 }
 
-/** 获取历史在线人数摘要（峰值、均值、总独立玩家） */
 async function getHistorySummary() {
-  try {
-    const data = await fetchJSON(`${API_BASE}/players/history`);
-    return data.summary || null;
-  } catch {
-    return null;
-  }
+  const data = await fetchWithCache("history", `${API_BASE}/players/history`, null);
+  return data?.summary || null;
 }
 
-/** 获取建筑总数 */
 async function getBuildingCount() {
-  try {
-    const list = await fetchJSON(`${API_BASE}/buildings`);
-    return Array.isArray(list) ? list.length : null;
-  } catch {
-    return null;
-  }
+  const list = await fetchWithCache("buildings", `${API_BASE}/buildings`, null);
+  return Array.isArray(list) ? list.length : null;
 }
 
-/** 获取封禁总数 */
 async function getBanCount() {
-  try {
-    const list = await fetchJSON(`${API_BASE}/bans`);
-    return Array.isArray(list) ? list.length : null;
-  } catch {
-    return null;
-  }
+  const list = await fetchWithCache("bans", `${API_BASE}/bans`, null);
+  return Array.isArray(list) ? list.length : null;
 }
 
 // ── 工具: XAML 转义 ──────────────────────────────────────────────
@@ -130,13 +138,20 @@ function fmtTime(iso) {
 //   - local:MyIconTextButton 的 Logo 需要 SVG Path，不能用 font icon
 
 async function buildXAML() {
-  const [players, anns, summary, buildingCount, banCount] = await Promise.all([
+  // Promise.allSettled: 某个 API 502 不影响其他 API 的结果
+  const results = await Promise.allSettled([
     getOnlinePlayers(),
     getAnnouncements(5),
     getHistorySummary(),
     getBuildingCount(),
     getBanCount(),
   ]);
+
+  const players   = results[0].status === "fulfilled" ? results[0].value : { online: -1, players: [] };
+  const anns      = results[1].status === "fulfilled" ? results[1].value : [];
+  const summary   = results[2].status === "fulfilled" ? results[2].value : null;
+  const buildingCount = results[3].status === "fulfilled" ? results[3].value : null;
+  const banCount  = results[4].status === "fulfilled" ? results[4].value : null;
 
   const online = players.online ?? -1;
   const playerList = players.players ?? [];
