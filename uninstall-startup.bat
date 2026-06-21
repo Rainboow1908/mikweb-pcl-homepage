@@ -1,9 +1,9 @@
 @echo off
-:: 取消开机启动
+:: Remove from startup
 del "%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\MikWeb-PCL.lnk" 2>nul
 if %errorlevel% equ 0 (
-    echo [OK] 已取消开机启动
+    echo [OK] Removed from startup
 ) else (
-    echo [INFO] 未找到开机启动项，可能已取消
+    echo [INFO] Not found - already removed
 )
 pause
