@@ -2,7 +2,23 @@
 
 Mik Casual 服务器的 PCL 启动器自定义主页。
 
-## 🎮 直接使用
+## 🚀 本地部署（推荐 — 实时数据、无延迟）
+
+```bash
+node server.js
+```
+
+PCL 填入: `http://localhost:38080/pcl-homepage.xaml`
+
+### 开机自启（无窗口、后台运行）
+
+右键 **install-startup.bat** → 以管理员身份运行。下次开机自动在后台启动。
+
+### 手动静默启动
+
+双击 `start-silent.vbs`，无 cmd 窗口。
+
+## 🌐 在线版（无需本地运行）
 
 在 PCL 中配置: **设置 → 个性化 → 主页 → 联网更新的下载地址**
 
@@ -10,19 +26,7 @@ Mik Casual 服务器的 PCL 启动器自定义主页。
 https://rainboow1908.github.io/mikweb-pcl-homepage/Custom.xaml
 ```
 
-> 数据由 GitHub Actions 每 5 分钟自动从 MikWeb API 拉取并更新。
-
-> ⏱️ 数据由 GitHub Actions 每 **5 分钟**自动拉取 MikWeb API 更新，无需手动操作。
-
-## 🔧 动态版（实时数据）
-
-如需实时在线玩家数、公告、封禁等数据，可自行部署 Node.js 服务器：
-
-```bash
-node server.js
-```
-
-PCL 填入: `http://localhost:38080/pcl-homepage.xaml`
+> 数据由 GitHub Actions 定时拉取更新。
 
 ## 环境变量
 
