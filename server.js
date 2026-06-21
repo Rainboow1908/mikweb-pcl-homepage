@@ -65,6 +65,36 @@ async function getAnnouncements(count = 5) {
   }
 }
 
+/** 获取历史在线人数摘要（峰值、均值、总独立玩家） */
+async function getHistorySummary() {
+  try {
+    const data = await fetchJSON(`${API_BASE}/players/history`);
+    return data.summary || null;
+  } catch {
+    return null;
+  }
+}
+
+/** 获取建筑总数 */
+async function getBuildingCount() {
+  try {
+    const list = await fetchJSON(`${API_BASE}/buildings`);
+    return Array.isArray(list) ? list.length : null;
+  } catch {
+    return null;
+  }
+}
+
+/** 获取封禁总数 */
+async function getBanCount() {
+  try {
+    const list = await fetchJSON(`${API_BASE}/bans`);
+    return Array.isArray(list) ? list.length : null;
+  } catch {
+    return null;
+  }
+}
+
 // ── 工具: XAML 转义 ──────────────────────────────────────────────
 
 const ESC = {
@@ -100,9 +130,12 @@ function fmtTime(iso) {
 //   - local:MyIconTextButton 的 Logo 需要 SVG Path，不能用 font icon
 
 async function buildXAML() {
-  const [players, anns] = await Promise.all([
+  const [players, anns, summary, buildingCount, banCount] = await Promise.all([
     getOnlinePlayers(),
     getAnnouncements(5),
+    getHistorySummary(),
+    getBuildingCount(),
+    getBanCount(),
   ]);
 
   const online = players.online ?? -1;
@@ -161,6 +194,58 @@ async function buildXAML() {
                    Text="${online > 0 ? "已获取在线人数，但暂无详细玩家列表" : "暂无玩家在线"}" />`;
   }
 
+  // ── 服务器数据概览（全部来自 API） ──
+  let statsRows = "";
+  const statsParts = [];
+
+  if (summary) {
+    if (summary.peak_online != null) {
+      statsParts.push(
+        `        <TextBlock TextWrapping="Wrap" Margin="0,0,0,4"
+                   Text="📈 历史峰值在线：${summary.peak_online} 人" />`,
+      );
+    }
+    if (summary.avg_online != null) {
+      statsParts.push(
+        `        <TextBlock TextWrapping="Wrap" Margin="0,0,0,4"
+                   Text="📊 平均在线人数：${Number(summary.avg_online).toFixed(1)} 人" />`,
+      );
+    }
+    if (summary.total_unique_players != null) {
+      statsParts.push(
+        `        <TextBlock TextWrapping="Wrap" Margin="0,0,0,4"
+                   Text="👥 历史独立玩家：${summary.total_unique_players} 人" />`,
+      );
+    }
+    if (summary.peak_time) {
+      statsParts.push(
+        `        <TextBlock TextWrapping="Wrap" Margin="0,0,0,4" FontSize="11" Foreground="#888888"
+                   Text="峰值时间：${esc(fmtTime(summary.peak_time))}" />`,
+      );
+    }
+  }
+
+  if (buildingCount != null) {
+    statsParts.push(
+      `        <TextBlock TextWrapping="Wrap" Margin="0,4,0,4"
+                   Text="🏗️ 建筑作品：${buildingCount} 个" />`,
+    );
+  }
+
+  if (banCount != null) {
+    const banColor = banCount > 0 ? "#FFAA00" : "#55FF55";
+    statsParts.push(
+      `        <TextBlock TextWrapping="Wrap" Margin="0,4,0,4" Foreground="${banColor}"
+                   Text="🚫 当前封禁：${banCount} 人" />`,
+    );
+  }
+
+  if (statsParts.length > 0) {
+    statsRows = statsParts.join("\n");
+  } else {
+    statsRows = `        <TextBlock TextWrapping="Wrap" Text="暂无法获取服务器统计数据" Foreground="#888888" />`;
+  }
+
   // 启动游戏按钮 — 用 \current 表示当前选中的 MC 版本，自动加入服务器
   const launchBtn = `<local:MyButton Margin="0,0,0,0" Width="260" Height="42" Padding="20,0,20,0" ColorType="Highlight"
                         Text="🚀 启动游戏并加入服务器" EventType="启动游戏" EventData="\\current|${esc(SERVER_ADDR)}"
@@ -192,14 +277,21 @@ ${playerRows}
     </StackPanel>
 </local:MyCard>
 
+<local:MyCard Title="服务器数据概览" Margin="0,0,0,15" CanSwap="True" IsSwapped="False">
+    <StackPanel Margin="25,40,23,15">
+        <local:MyHint Text="以下数据均来自 MikWeb API，实时更新。" Theme="Blue" Margin="0,0,0,8" />
+${statsRows}
+    </StackPanel>
+</local:MyCard>
+
 ${annCards}
 
-<local:MyCard Title="更多" Margin="0,0,0,15" CanSwap="True" IsSwapped="True">
+<local:MyCard Title="网页入口" Margin="0,0,0,15" CanSwap="True" IsSwapped="True">
     <StackPanel Margin="25,40,23,15">
         <TextBlock TextWrapping="Wrap" Margin="0,0,0,8"
                    Text="以下入口将在浏览器中打开对应页面。" />
         <local:MyListItem Margin="-5,2,-5,5"
-                          Title="建筑展示" Info="查看服务器建筑作品"
+                          Title="建筑展示" Info="查看所有建筑作品详情"
                           EventType="打开网页" EventData="https://mik.noctiro.moe/buildings" Type="Clickable" />
         <local:MyListItem Margin="-5,2,-5,5"
                           Title="封禁列表" Info="查看当前封禁记录"
@@ -207,9 +299,6 @@ ${annCards}
         <local:MyListItem Margin="-5,2,-5,5"
                           Title="Wiki" Info="服务器帮助文档"
                           EventType="打开网页" EventData="https://mik.noctiro.moe/wiki" Type="Clickable" />
-        <local:MyListItem Margin="-5,2,-5,5"
-                          Title="在线人数历史" Info="查看历史在线人数曲线"
-                          EventType="打开网页" EventData="https://mik.noctiro.moe/players/history" Type="Clickable" />
     </StackPanel>
 </local:MyCard>
 
