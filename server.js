@@ -169,89 +169,77 @@ async function buildXAML() {
     statusColor = "#55FF55";
   }
 
-  // ── 内嵌卡片（套在服务器数据概览里面） ──
+  // ── 服务器数据概览内的分区（不嵌套 MyCard，避免标题重叠） ──
 
-  // 在线玩家 — 内嵌卡片
-  let playerCard = "";
+  // 在线玩家
+  let playerSection = "";
   if (playerList.length > 0) {
     const rows = playerList
       .slice(0, 12)
       .map(
         (p) =>
-          `                <TextBlock TextWrapping="Wrap" Margin="0,0,0,2"
-                           Text="${esc(p.name)}  ·  上线于 ${esc(fmtTime(p.joined_at))}" />`,
+          `        <TextBlock TextWrapping="Wrap" Margin="0,0,0,2"
+                   Text="${esc(p.name)}  ·  上线于 ${esc(fmtTime(p.joined_at))}" />`,
       )
       .join("\n");
-    playerCard = `<local:MyCard Title="在线玩家 (${playerList.length})" Margin="0,0,0,10" CanSwap="True" IsSwapped="False">
-        <StackPanel Margin="25,40,23,10">
-${rows}
-        </StackPanel>
-    </local:MyCard>`;
+    playerSection = `        <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,10,0,4"
+                   Text="🎮 在线玩家 (${playerList.length})" />
+${rows}`;
   } else {
-    playerCard = `<local:MyCard Title="在线玩家" Margin="0,0,0,10" CanSwap="True">
-        <StackPanel Margin="25,40,23,10">
-            <TextBlock TextWrapping="Wrap"
-                       Text="${online > 0 ? "已获取在线人数，但暂无详细玩家列表" : "暂无玩家在线"}" />
-        </StackPanel>
-    </local:MyCard>`;
+    playerSection = `        <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,10,0,4"
+                   Text="🎮 在线玩家" />
+        <TextBlock TextWrapping="Wrap" Margin="0,0,0,4"
+                   Text="${online > 0 ? "已获取在线人数，但暂无详细玩家列表" : "暂无玩家在线"}" />`;
   }
 
-  // 公告 — 内嵌卡片
-  let annCard = "";
+  // 公告
+  let annSection = "";
   if (anns.length > 0) {
     const items = anns
       .map(
         (a, i) =>
-          `                <StackPanel Margin="0,${i > 0 ? "10" : "0"},0,0">
-                    <TextBlock TextWrapping="Wrap" Margin="0,0,0,2"
-                               Text="${esc(a.content || "")}" />
-                    <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888888"
-                               Text="${esc(fmtTime(a.timestamp))}" />
-                </StackPanel>`,
+          `        <StackPanel Margin="0,${i > 0 ? "8" : "0"},0,0">
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,2"
+                       Text="${esc(a.content || "")}" />
+            <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888888"
+                       Text="${esc(fmtTime(a.timestamp))}" />
+        </StackPanel>`,
       )
       .join("\n");
-    annCard = `<local:MyCard Title="公告 (${anns.length})" Margin="0,0,0,10" CanSwap="True" IsSwapped="False">
-        <StackPanel Margin="25,40,23,15">
-${items}
-        </StackPanel>
-    </local:MyCard>`;
+    annSection = `        <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,10,0,4"
+                   Text="📢 公告 (${anns.length})" />
+${items}`;
   } else {
-    annCard = `<local:MyCard Title="公告" Margin="0,0,0,10" CanSwap="True">
-        <StackPanel Margin="25,40,23,10">
-            <TextBlock TextWrapping="Wrap" Text="暂无公告" />
-        </StackPanel>
-    </local:MyCard>`;
+    annSection = `        <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,10,0,4"
+                   Text="📢 公告" />
+        <TextBlock TextWrapping="Wrap" Margin="0,0,0,4" Text="暂无公告" />`;
   }
 
-  // 封禁列表 — 内嵌卡片
-  let banCard = "";
+  // 封禁列表
+  let banSection = "";
   if (bans && bans.length > 0) {
     const items = bans
       .map(
         (b, i) =>
-          `                <StackPanel Margin="0,${i > 0 ? "10" : "0"},0,0">
-                    <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,2"
-                               Text="${esc(b.playerName || "?")}" />
-                    <TextBlock TextWrapping="Wrap" Margin="0,0,0,1"
-                               Text="原因：${esc(b.reason || "无")}" />
-                    <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" FontSize="11" Foreground="#888888"
-                               Text="执行者：${esc(b.bannedBy || "?")}  ·  ${esc(fmtTime(b.bannedAt))}" />
-                    <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="${b.isPermanent ? "#FF5555" : "#FFAA00"}"
-                               Text="${b.isPermanent ? "永久封禁" : "过期时间：" + esc(fmtTime(b.expiresAt || "?"))}" />
-                </StackPanel>`,
+          `        <StackPanel Margin="0,${i > 0 ? "8" : "0"},0,0">
+            <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,2"
+                       Text="${esc(b.playerName || "?")}" />
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,1"
+                       Text="原因：${esc(b.reason || "无")}" />
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" FontSize="11" Foreground="#888888"
+                       Text="执行者：${esc(b.bannedBy || "?")}  ·  ${esc(fmtTime(b.bannedAt))}" />
+            <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="${b.isPermanent ? "#FF5555" : "#FFAA00"}"
+                       Text="${b.isPermanent ? "永久封禁" : "过期时间：" + esc(fmtTime(b.expiresAt || "?"))}" />
+        </StackPanel>`,
       )
       .join("\n");
-    banCard = `<local:MyCard Title="封禁列表 (${bans.length})" Margin="0,0,0,10" CanSwap="True" IsSwapped="False">
-        <StackPanel Margin="25,40,23,15">
-${items}
-        </StackPanel>
-    </local:MyCard>`;
+    banSection = `        <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,10,0,4"
+                   Text="🚫 封禁列表 (${bans.length})" />
+${items}`;
   } else {
-    banCard = `<local:MyCard Title="封禁列表" Margin="0,0,0,10" CanSwap="True">
-        <StackPanel Margin="25,40,23,10">
-            <TextBlock TextWrapping="Wrap" Text="暂无封禁记录" />
-        </StackPanel>
-    </local:MyCard>`;
+    banSection = `        <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,10,0,4"
+                   Text="🚫 封禁列表" />
+        <TextBlock TextWrapping="Wrap" Margin="0,0,0,4" Text="暂无封禁记录" />`;
   }
 
   // ── 数据概览顶部的摘要 + 建筑 ──
@@ -305,9 +293,9 @@ ${items}
     <StackPanel Margin="25,40,23,15">
         <local:MyHint Text="在线玩家、公告、封禁等数据均来自 MikWeb API。" Theme="Blue" Margin="0,0,0,10" />
 ${topStats}
-${playerCard}
-${annCard}
-${banCard}
+${playerSection}
+${annSection}
+${banSection}
     </StackPanel>
 </local:MyCard>
 
