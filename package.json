@@ -1,0 +1,11 @@
+{
+  "name": "mikweb-pcl-homepage",
+  "version": "1.0.0",
+  "description": "PCL2 自定义主页 — 查询 Mik Casual 服务器状态",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {}
+}
