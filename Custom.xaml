@@ -2,7 +2,7 @@
     <StackPanel Margin="25,40,23,15">
         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
             <TextBlock Text="●" FontSize="14" Foreground="#55FF55" Margin="0,0,6,0" VerticalAlignment="Center" />
-            <TextBlock Text="2 人在线" FontSize="16" Foreground="#55FF55" VerticalAlignment="Center" />
+            <TextBlock Text="4 人在线" FontSize="16" Foreground="#55FF55" VerticalAlignment="Center" />
             <TextBlock Text="   noctiro.moe" FontSize="13" Foreground="#888888" VerticalAlignment="Center" Margin="8,0,0,0" />
         </StackPanel>
         <local:MyHint Text="点击下方按钮即可一键启动游戏并加入服务器！" Theme="Blue" Margin="0,0,0,12" />
@@ -20,110 +20,26 @@
     </StackPanel>
 </local:MyCard>
 
-<local:MyCard Title="在线玩家" Margin="0,0,0,15" CanSwap="True">
+<local:MyCard Title="在线玩家 (4)" Margin="0,0,0,15" CanSwap="True" IsSwapped="False">
     <StackPanel Margin="25,40,23,15">
-        <TextBlock TextWrapping="Wrap" Text="已获取在线人数，但暂无详细玩家列表" />
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,2"
+                       Text="Kanami_dog  ·  上线于 2026/6/21 04:53" />
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,2"
+                       Text="lambda_ady360  ·  上线于 2026/6/21 04:33" />
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,2"
+                       Text="Mcxiaoliu1908  ·  上线于 2026/6/21 04:57" />
+            <TextBlock TextWrapping="Wrap" Margin="0,0,0,2"
+                       Text="Noctiro  ·  上线于 2026/6/20 18:59" />
     </StackPanel>
 </local:MyCard>
-<local:MyCard Title="公告 (5)" Margin="0,0,0,15" CanSwap="True" IsSwapped="False">
+<local:MyCard Title="公告" Margin="0,0,0,15" CanSwap="True">
     <StackPanel Margin="25,40,23,15">
-            <StackPanel Margin="0,0,0,0">
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,2" Text="新增命令 /menu , 现在可以调整&quot;提及(mention/原名at)&quot;、&quot;被TP&quot;功能的设置了
-修复了AFK玩家可以被推动的bug" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888888" Text="2026/6/20 19:00" />
-            </StackPanel>
-            <StackPanel Margin="0,10,0,0">
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,2" Text="新增命令 /tempwhitelist
-正式成员可以使用此命令添加新玩家白名单
-新玩家需要在1个小时有效期内进入服务器,否则过期" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888888" Text="2026/6/20 11:00" />
-            </StackPanel>
-            <StackPanel Margin="0,10,0,0">
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,2" Text="1. 新增命令/afk，可以使用 /afk 文本 来自定义挂机状态文本
-2. 优化了/announcement公告菜单的样式
-3. 添加了Tip小提示功能
-4. 修复了命令选择器安全过滤能被绕过的问题" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888888" Text="2026/6/19 02:35" />
-            </StackPanel>
-            <StackPanel Margin="0,10,0,0">
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,2" Text="服务器在卡顿的时候不再优先进行全局红石禁用，而是对引发卡顿的区块进行区域红石禁用" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888888" Text="2026/4/16 17:11" />
-            </StackPanel>
-            <StackPanel Margin="0,10,0,0">
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,2" Text="1. 新增 /nametag 命令
-2. 官网新增查看玩家历史人数功能" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888888" Text="2026/4/6 06:00" />
-            </StackPanel>
+        <TextBlock TextWrapping="Wrap" Text="暂无公告" />
     </StackPanel>
 </local:MyCard>
-<local:MyCard Title="封禁列表 (11)" Margin="0,0,0,15" CanSwap="True" IsSwapped="False">
+<local:MyCard Title="封禁列表" Margin="0,0,0,15" CanSwap="True">
     <StackPanel Margin="25,40,23,15">
-            <StackPanel Margin="0,0,0,0">
-                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,2" Text="Ainbvf" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" Text="原因：炸服" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" FontSize="11" Foreground="#888888" Text="执行者：Noctiro  ·  2025/8/1 11:03" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#FFAA00" Text="过期时间：2030/8/1 11:03" />
-            </StackPanel>
-            <StackPanel Margin="0,10,0,0">
-                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,2" Text="Hypixel_water" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" Text="原因：生成大量实体炸服、破坏他人建筑、制造多个高频红石、破坏主城周边道路" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" FontSize="11" Foreground="#888888" Text="执行者：Noctiro  ·  2025/8/26 08:20" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#FFAA00" Text="过期时间：2030/8/26 08:20" />
-            </StackPanel>
-            <StackPanel Margin="0,10,0,0">
-                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,2" Text="yyyyhh123" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" Text="原因：企图炸服：危险物品、高频红石" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" FontSize="11" Foreground="#888888" Text="执行者：Noctiro  ·  2025/8/27 09:43" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#FFAA00" Text="过期时间：2028/8/27 09:43" />
-            </StackPanel>
-            <StackPanel Margin="0,10,0,0">
-                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,2" Text="xuehuawow" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" Text="原因：炸服" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" FontSize="11" Foreground="#888888" Text="执行者：Noctiro  ·  2025/9/16 16:17" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#FFAA00" Text="过期时间：2030/9/16 16:17" />
-            </StackPanel>
-            <StackPanel Margin="0,10,0,0">
-                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,2" Text=".ToningKey141561" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" Text="原因：炸服" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" FontSize="11" Foreground="#888888" Text="执行者：Noctiro  ·  2025/8/1 10:54" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#FFAA00" Text="过期时间：2030/8/1 10:54" />
-            </StackPanel>
-            <StackPanel Margin="0,10,0,0">
-                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,2" Text="raininainer" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" Text="原因：毁服" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" FontSize="11" Foreground="#888888" Text="执行者：CitrusR9  ·  2025/9/17 12:46" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#FFAA00" Text="过期时间：2030/9/17 12:46" />
-            </StackPanel>
-            <StackPanel Margin="0,10,0,0">
-                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,2" Text="49xinbiaozuo" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" Text="原因：破坏多个建筑" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" FontSize="11" Foreground="#888888" Text="执行者：CONSOLE  ·  2026/4/12 00:20" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#FFAA00" Text="过期时间：2031/4/11 00:20" />
-            </StackPanel>
-            <StackPanel Margin="0,10,0,0">
-                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,2" Text="oscar1014" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" Text="原因：企图炸服" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" FontSize="11" Foreground="#888888" Text="执行者：Noctiro  ·  2025/8/25 11:40" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#FFAA00" Text="过期时间：2028/8/25 11:40" />
-            </StackPanel>
-            <StackPanel Margin="0,10,0,0">
-                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,2" Text="JinWu258" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" Text="原因：破坏他人建筑：自习室、主城旁地铁站" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" FontSize="11" Foreground="#888888" Text="执行者：Noctiro  ·  2025/8/25 11:24" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#FFAA00" Text="过期时间：2030/8/25 11:24" />
-            </StackPanel>
-            <StackPanel Margin="0,10,0,0">
-                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,2" Text="wanggaoc" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" Text="原因：破坏主城、破坏他人建筑(LevelSCP地图画、Men_ran音乐机器)" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" FontSize="11" Foreground="#888888" Text="执行者：Noctiro  ·  2026/3/23 17:33" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#FFAA00" Text="过期时间：2031/3/22 17:33" />
-            </StackPanel>
-            <StackPanel Margin="0,10,0,0">
-                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,0,0,2" Text="122131323" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" Text="原因：尝试毁图" />
-                <TextBlock TextWrapping="Wrap" Margin="0,0,0,1" FontSize="11" Foreground="#888888" Text="执行者：AurorAustralis_  ·  2026/3/8 13:55" />
-                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#FFAA00" Text="过期时间：2027/3/8 13:55" />
-            </StackPanel>
+        <TextBlock TextWrapping="Wrap" Text="暂无封禁记录" />
     </StackPanel>
 </local:MyCard>
 <local:MyCard Title="服务器数据" Margin="0,0,0,15" CanSwap="True" IsSwapped="False">
