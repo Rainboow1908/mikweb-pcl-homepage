@@ -10,6 +10,10 @@ Mik Casual 服务器的 PCL 启动器自定义主页。
 https://rainboow1908.github.io/mikweb-pcl-homepage/Custom.xaml
 ```
 
+> 数据由 GitHub Actions 每 5 分钟自动从 MikWeb API 拉取并更新。
+
+> ⏱️ 数据由 GitHub Actions 每 **5 分钟**自动拉取 MikWeb API 更新，无需手动操作。
+
 ## 🔧 动态版（实时数据）
 
 如需实时在线玩家数、公告、封禁等数据，可自行部署 Node.js 服务器：
