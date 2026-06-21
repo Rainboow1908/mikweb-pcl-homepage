@@ -98,9 +98,9 @@ async function getBuildingCount() {
   return Array.isArray(list) ? list.length : null;
 }
 
-async function getBanCount() {
+async function getBans() {
   const list = await fetchWithCache("bans", `${API_BASE}/bans`, null);
-  return Array.isArray(list) ? list.length : null;
+  return Array.isArray(list) ? list : null;
 }
 
 // ── 工具: XAML 转义 ──────────────────────────────────────────────
@@ -144,14 +144,14 @@ async function buildXAML() {
     getAnnouncements(5),
     getHistorySummary(),
     getBuildingCount(),
-    getBanCount(),
+    getBans(),
   ]);
 
   const players   = results[0].status === "fulfilled" ? results[0].value : { online: -1, players: [] };
   const anns      = results[1].status === "fulfilled" ? results[1].value : [];
   const summary   = results[2].status === "fulfilled" ? results[2].value : null;
   const buildingCount = results[3].status === "fulfilled" ? results[3].value : null;
-  const banCount  = results[4].status === "fulfilled" ? results[4].value : null;
+  const bans      = results[4].status === "fulfilled" ? results[4].value : null;
 
   const online = players.online ?? -1;
   const playerList = players.players ?? [];
@@ -193,7 +193,31 @@ async function buildXAML() {
 </local:MyCard>`;
   }
 
-  // 在线玩家列表
+  // 封禁列表卡片
+  let banCards = "";
+  if (bans && bans.length > 0) {
+    banCards = bans
+      .map(
+        (b) =>
+          `<local:MyCard Title="封禁: ${esc(b.playerName || "?")}" Margin="0,0,0,10" CanSwap="True">
+    <StackPanel Margin="25,15,23,15">
+        <TextBlock TextWrapping="Wrap" Margin="0,0,0,4"
+                   Text="原因：${esc(b.reason || "无")}" />
+        <TextBlock TextWrapping="Wrap" Margin="0,0,0,4" FontSize="11" Foreground="#888888"
+                   Text="执行者：${esc(b.bannedBy || "?")}  ·  ${esc(fmtTime(b.bannedAt))}" />
+        <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="${b.isPermanent ? "#FF5555" : "#FFAA00"}"
+                   Text="${b.isPermanent ? "永久封禁" : "过期时间：" + esc(fmtTime(b.expiresAt || "?"))}" />
+    </StackPanel>
+</local:MyCard>`,
+      )
+      .join("\n");
+  } else {
+    banCards = `<local:MyCard Title="封禁列表" Margin="0,0,0,10" CanSwap="True">
+    <StackPanel Margin="25,15,23,15">
+        <TextBlock TextWrapping="Wrap" Text="暂无封禁记录" Foreground="#55FF55" />
+    </StackPanel>
+</local:MyCard>`;
+  }
   let playerRows = "";
   if (playerList.length > 0) {
     playerRows = playerList
@@ -247,14 +271,6 @@ async function buildXAML() {
     );
   }
 
-  if (banCount != null) {
-    const banColor = banCount > 0 ? "#FFAA00" : "#55FF55";
-    statsParts.push(
-      `        <TextBlock TextWrapping="Wrap" Margin="0,4,0,4" Foreground="${banColor}"
-                   Text="🚫 当前封禁：${banCount} 人" />`,
-    );
-  }
-
   if (statsParts.length > 0) {
     statsRows = statsParts.join("\n");
   } else {
@@ -301,6 +317,8 @@ ${statsRows}
 
 ${annCards}
 
+${banCards}
+
 <local:MyCard Title="网页入口" Margin="0,0,0,15" CanSwap="True" IsSwapped="True">
     <StackPanel Margin="25,40,23,15">
         <TextBlock TextWrapping="Wrap" Margin="0,0,0,8"
@@ -308,9 +326,6 @@ ${annCards}
         <local:MyListItem Margin="-5,2,-5,5"
                           Title="建筑展示" Info="查看所有建筑作品详情"
                           EventType="打开网页" EventData="https://mik.noctiro.moe/buildings" Type="Clickable" />
-        <local:MyListItem Margin="-5,2,-5,5"
-                          Title="封禁列表" Info="查看当前封禁记录"
-                          EventType="打开网页" EventData="https://mik.noctiro.moe/bans" Type="Clickable" />
         <local:MyListItem Margin="-5,2,-5,5"
                           Title="Wiki" Info="服务器帮助文档"
                           EventType="打开网页" EventData="https://mik.noctiro.moe/wiki" Type="Clickable" />
