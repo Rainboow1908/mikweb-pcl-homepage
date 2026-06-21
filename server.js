@@ -183,13 +183,13 @@ async function buildXAML() {
       )
       .join("\n");
     playerCard = `<local:MyCard Title="在线玩家 (${playerList.length})" Margin="0,0,0,10" CanSwap="True" IsSwapped="False">
-        <StackPanel Margin="25,15,23,10">
+        <StackPanel Margin="25,40,23,10">
 ${rows}
         </StackPanel>
     </local:MyCard>`;
   } else {
     playerCard = `<local:MyCard Title="在线玩家" Margin="0,0,0,10" CanSwap="True">
-        <StackPanel Margin="25,15,23,10">
+        <StackPanel Margin="25,40,23,10">
             <TextBlock TextWrapping="Wrap"
                        Text="${online > 0 ? "已获取在线人数，但暂无详细玩家列表" : "暂无玩家在线"}" />
         </StackPanel>
@@ -211,13 +211,13 @@ ${rows}
       )
       .join("\n");
     annCard = `<local:MyCard Title="公告 (${anns.length})" Margin="0,0,0,10" CanSwap="True" IsSwapped="False">
-        <StackPanel Margin="25,15,23,15">
+        <StackPanel Margin="25,40,23,15">
 ${items}
         </StackPanel>
     </local:MyCard>`;
   } else {
     annCard = `<local:MyCard Title="公告" Margin="0,0,0,10" CanSwap="True">
-        <StackPanel Margin="25,15,23,10">
+        <StackPanel Margin="25,40,23,10">
             <TextBlock TextWrapping="Wrap" Text="暂无公告" />
         </StackPanel>
     </local:MyCard>`;
@@ -242,13 +242,13 @@ ${items}
       )
       .join("\n");
     banCard = `<local:MyCard Title="封禁列表 (${bans.length})" Margin="0,0,0,10" CanSwap="True" IsSwapped="False">
-        <StackPanel Margin="25,15,23,15">
+        <StackPanel Margin="25,40,23,15">
 ${items}
         </StackPanel>
     </local:MyCard>`;
   } else {
     banCard = `<local:MyCard Title="封禁列表" Margin="0,0,0,10" CanSwap="True">
-        <StackPanel Margin="25,15,23,10">
+        <StackPanel Margin="25,40,23,10">
             <TextBlock TextWrapping="Wrap" Text="暂无封禁记录" />
         </StackPanel>
     </local:MyCard>`;
