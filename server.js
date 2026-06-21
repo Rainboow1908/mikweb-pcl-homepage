@@ -190,7 +190,7 @@ ${items}
 </local:MyCard>`;
   } else {
     annCards = `<local:MyCard Title="公告" Margin="0,0,0,15" CanSwap="True">
-    <StackPanel Margin="25,15,23,15">
+    <StackPanel Margin="25,40,23,15">
         <TextBlock TextWrapping="Wrap" Text="暂无公告" Foreground="#888888" />
     </StackPanel>
 </local:MyCard>`;
@@ -221,8 +221,8 @@ ${items}
 </local:MyCard>`;
   } else {
     banCards = `<local:MyCard Title="封禁列表" Margin="0,0,0,15" CanSwap="True">
-    <StackPanel Margin="25,15,23,15">
-        <TextBlock TextWrapping="Wrap" Text="暂无封禁记录" Foreground="#55FF55" />
+    <StackPanel Margin="25,40,23,15">
+        <TextBlock TextWrapping="Wrap" Text="暂无封禁记录" Foreground="#888888" />
     </StackPanel>
 </local:MyCard>`;
   }
