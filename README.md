@@ -14,32 +14,7 @@ Mik Casual 服务器的 PCL 启动器自定义主页。
 
 ### 启动
 
-```bash
-node server.js
-```
-
-### PCL 配置
-
-**设置 → 个性化 → 主页 → 联网更新的下载地址**
-
-```
-http://localhost:38080/pcl-homepage.xaml
-```
-
-### 开机自启（无窗口、后台静默运行）
-
-1. 右键 `install-startup.bat` → **以管理员身份运行**（只需一次）
-2. 之后每次开机自动在后台启动，看不到任何窗口
-
-### 手动后台启动
-
-双击 `start-silent.vbs`，无 cmd 窗口。
-
-### 停止
-
-```powershell
-Get-Process node | Stop-Process -Force
-```
+双击 `start.bat`（最小化窗口运行）。
 
 ---
 
