@@ -9,7 +9,7 @@
  * 环境变量 (可选):
  *   PORT          - 监听端口 (默认 38080)
  *   API_BASE      - MikWeb API 地址 (默认 https://mik.noctiro.moe/api)
- *   SERVER_ADDR   - MC 服务器地址 (默认 mik.noctiro.moe)
+ *   SERVER_ADDR   - MC 服务器地址 (默认 noctiro.moe)
  */
 
 import http from "node:http";
@@ -17,7 +17,7 @@ import https from "node:https";
 
 const PORT = parseInt(process.env.PORT || "38080", 10);
 const API_BASE = process.env.API_BASE || "https://mik.noctiro.moe/api";
-const SERVER_ADDR = process.env.SERVER_ADDR || "mik.noctiro.moe";
+const SERVER_ADDR = process.env.SERVER_ADDR || "noctiro.moe";
 
 // ── 工具: JSON fetch + 缓存 ──────────────────────────────────────
 
