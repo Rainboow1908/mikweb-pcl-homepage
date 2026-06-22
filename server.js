@@ -167,7 +167,7 @@ async function buildXAML() {
     statusColor = "#FFAA00";
   } else {
     statusText = `${online} 人在线`;
-    statusColor = "#55FF55";
+    statusColor = "#2ECC40";
   }
 
   // ── 独立可折叠卡片 ──
