@@ -10,6 +10,7 @@
  *   PORT          - 监听端口 (默认 38080)
  *   API_BASE      - MikWeb API 地址 (默认 https://mik.noctiro.moe/api)
  *   SERVER_ADDR   - MC 服务器地址 (默认 noctiro.moe)
+ *   VERSION       - 2026.06.21
  */
 
 import http from "node:http";
