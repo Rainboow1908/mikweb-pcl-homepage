@@ -13,27 +13,23 @@ echo An update is available.
 choice /c yn /m "Apply update now?"
 if errorlevel 2 goto skip
 
-:: Start update in background
 set "flag=%temp%\mikweb-update-flag"
 start /b cmd /c "git pull >nul 2>&1 && echo 1>%flag%"
-set "bar="
-set "steps=0"
+set "spin=\|/-"
+set "i=0"
 
-:loop
-set /a "steps+=1"
-set "bar=!bar!#"
-set /p "=Updating [!bar!] "<nul
+:spin
+set /a "i+=1"
+set /a "idx=i %% 4"
+call set "c=%%spin:~!idx!,1%%"
+set /p "=Updating... !c! "<nul
 choice /t 1 /d y /c y >nul 2>&1
 if exist "%flag%" goto done
-if %steps% lss 20 goto loop
+goto spin
 
 :done
-:: Pad to at least 1 second total
-if %steps% lss 1 (
-    choice /t 1 /d y /c y >nul 2>&1
-)
 del "%flag%" 2>nul
-echo.
+echo Done.
 
 :skip
 start /min "" node server.js
