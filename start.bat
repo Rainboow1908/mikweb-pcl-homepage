@@ -25,10 +25,10 @@ set /a "idx=i %% 4"
 call set "c=%%spin:~!idx!,1%%"
 cls
 echo Updating... !c!
-ping -n 1 127.0.0.1 >nul
+choice /t 1 /d y /c y >nul
 set /a "elapsed+=1"
 if exist "%flag%" (
-    if !elapsed! geq 10 goto done
+    if !elapsed! geq 4 goto done
     goto spin
 )
 goto spin
