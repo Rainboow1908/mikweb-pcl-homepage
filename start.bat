@@ -18,12 +18,13 @@ set "elapsed=0"
 start /b cmd /c "git pull >nul 2>&1 && echo 1>%flag%"
 set "spin=\|/-"
 set "i=0"
+echo Updating...
 
 :spin
 set /a "i+=1"
 set /a "idx=i %% 4"
 call set "c=%%spin:~!idx!,1%%"
-<nul set /p "=Updating... !c!  "
+echo   !c!
 ping -n 1 127.0.0.1 >nul
 set /a "elapsed+=1"
 if exist "%flag%" (
@@ -34,7 +35,6 @@ goto spin
 
 :done
 del "%flag%" 2>nul
-echo.
 echo Done.
 
 :skip
