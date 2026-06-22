@@ -18,7 +18,7 @@ start /b cmd /c "git pull >nul 2>&1 && echo 1>%flag%"
 set "spin=\|/-"
 set "i=0"
 set "elapsed=0"
-set /a "minframes=%random% %% 6 + 3"
+set /a "minframes=%random% %% 5 + 2"
 
 :spin
 set /a "i+=1"
@@ -26,7 +26,7 @@ set /a "idx=i %% 4"
 call set "c=%%spin:~!idx!,1%%"
 cls
 echo Updating... !c!
-ping -n 1 -w 300 192.0.2.1 >nul
+ping -n 1 -w 250 192.0.2.1 >nul
 set /a "elapsed+=1"
 if exist "%flag%" (
     if !elapsed! geq !minframes! goto done
