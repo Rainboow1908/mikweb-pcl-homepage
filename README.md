@@ -46,16 +46,6 @@ node server.js
 
 ---
 
-## 在线版（备选，无需本地运行）
-
-```
-https://rainboow1908.github.io/mikweb-pcl-homepage/Custom.xaml
-```
-
-> 手动触发更新：https://github.com/Rainboow1908/mikweb-pcl-homepage/actions
-
----
-
 ## 参考
 
 - [PCL Wiki - 替换标记](https://github.com/Meloong-Git/PCL/wiki/%E6%9B%BF%E6%8D%A2%E6%A0%87%E8%AE%B0)
