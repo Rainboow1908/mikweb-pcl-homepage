@@ -1,47 +1,80 @@
 # MikWeb PCL 主页
 
-Mik Casual 服务器的 PCL 启动器自定义主页，实时显示在线玩家、公告、封禁列表等数据。
+Mik Casual Minecraft 服务器的 PCL 启动器自定义主页。
+
+启动后自动从 MikWeb API 拉取实时数据：在线玩家、公告、封禁列表、建筑数量、历史在线统计。
 
 ---
 
-## 安装 Node.js
+## 环境要求
+
+- **Windows** 操作系统
+- **Node.js** LTS 版本
+
+### 安装 Node.js
 
 1. 打开 https://nodejs.org
-2. 下载 **LTS** 版本（左边绿色按钮）
-3. 运行安装程序，一路点 Next，全部默认即可
-4. 安装完后打开 CMD，输入 `node -v` 验证，显示版本号即成功
+2. 下载 **LTS** 版本（左侧绿色按钮）
+3. 运行安装程序，全部默认，一路 Next
+4. 打开 CMD 输入 `node -v`，显示版本号即成功
 
 ---
 
-## 使用
+## 快速开始
 
-| 文件 | 操作 |
-|------|------|
-| `start.bat` | 双击启动服务器（最小化窗口） |
-| `stop.bat` | 双击停止服务器 |
-| `install-startup.bat` | 右键 → **以管理员身份运行**，开机自动启动 |
-| `uninstall-startup.bat` | 双击取消开机自启 |
-
-## PCL 配置
-
-**设置 → 个性化 → 主页 → 联网更新的下载地址**
+1. 双击 `start.bat`（服务器在最小化窗口运行）
+2. 打开 PCL，进入 **设置 → 个性化 → 主页**
+3. **联网更新的下载地址** 填入：
 
 ```
 http://localhost:38080/pcl-homepage.xaml
 ```
 
+4. 点击 PCL 主页的刷新按钮，即可看到实时数据
+
+---
+
+## 脚本说明
+
+| 文件 | 功能 | 用法 |
+|------|------|------|
+| `start.bat` | 启动服务器 | 双击，最小化运行 |
+| `stop.bat` | 停止服务器 | 双击 |
+| `install-startup.bat` | 设为开机自启 | 右键 → 以管理员身份运行 |
+| `uninstall-startup.bat` | 取消开机自启 | 双击 |
+
+---
+
 ## 环境变量（可选）
+
+修改默认配置，在 CMD 中设置后启动：
 
 | 变量 | 默认值 | 说明 |
 |------|--------|------|
-| `PORT` | `38080` | 监听端口 |
+| `PORT` | `38080` | HTTP 监听端口 |
 | `API_BASE` | `https://mik.noctiro.moe/api` | MikWeb API 地址 |
-| `SERVER_ADDR` | `noctiro.moe` | MC 服务器连接地址 |
+| `SERVER_ADDR` | `noctiro.moe` | 显示的 MC 连接地址 |
+
+示例：
 
 ```powershell
-# 示例：改端口
-$env:PORT="12345"
+$env:PORT = "12345"
+$env:SERVER_ADDR = "play.example.com"
 node server.js
+```
+
+---
+
+## 项目结构
+
+```
+├── server.js              # 主程序（HTTP 服务 + XAML 生成）
+├── package.json
+├── start.bat              # 启动
+├── stop.bat               # 停止
+├── install-startup.bat    # 开机自启
+├── uninstall-startup.bat  # 取消自启
+└── README.md
 ```
 
 ---
