@@ -15,8 +15,6 @@ if errorlevel 2 goto skip
 
 set "flag=%temp%\mikweb-update-flag"
 start /b cmd /c "git pull >nul 2>&1 && echo 1>%flag%"
-echo Updating...
-
 set "spin=\|/-"
 set "i=0"
 set "elapsed=0"
@@ -25,17 +23,21 @@ set "elapsed=0"
 set /a "i+=1"
 set /a "idx=i %% 4"
 call set "c=%%spin:~!idx!,1%%"
-echo !c!
+cls
+echo Updating... !c!
 ping -n 1 127.0.0.1 >nul
 set /a "elapsed+=1"
 if exist "%flag%" (
-    if !elapsed! geq 2 goto done
+    if !elapsed! geq 3 goto done
     goto spin
 )
 goto spin
 
 :done
 del "%flag%" 2>nul
+cls
+echo Updating... done.
+echo.
 echo Done.
 
 :skip
