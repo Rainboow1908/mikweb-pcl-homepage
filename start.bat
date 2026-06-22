@@ -28,7 +28,7 @@ echo Updating... !c!
 ping -n 1 127.0.0.1 >nul
 set /a "elapsed+=1"
 if exist "%flag%" (
-    if !elapsed! geq 3 goto done
+    if !elapsed! geq 4 goto done
     goto spin
 )
 goto spin
