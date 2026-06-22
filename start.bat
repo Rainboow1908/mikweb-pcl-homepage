@@ -14,28 +14,10 @@ choice /c yn /m "Apply update now?"
 if errorlevel 2 goto skip
 
 set "flag=%temp%\mikweb-update-flag"
-set "elapsed=0"
 start /b cmd /c "git pull >nul 2>&1 && echo 1>%flag%"
-set "spin=\|/-"
-set "i=0"
-echo Updating...
 
-:spin
-set /a "i+=1"
-set /a "idx=i %% 4"
-call set "c=%%spin:~!idx!,1%%"
-echo   !c!
-ping -n 1 127.0.0.1 >nul
-set /a "elapsed+=1"
-if exist "%flag%" (
-    if !elapsed! geq 3 goto done
-    goto spin
-)
-goto spin
-
-:done
-del "%flag%" 2>nul
-echo Done.
+:: Animated spinner in one line
+powershell -c "$s=@('\','|','/','-');$n=0;while(!(test-path $env:temp'\mikweb-update-flag') -or $n -lt 3){write-host -noNewline \"`rUpdating... $($s[$n++ % 4]) \";sleep -m 300};write-host \"`rUpdating... done.   `nDone.\""
 
 :skip
 start /min "" node server.js
