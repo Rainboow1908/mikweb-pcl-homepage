@@ -23,17 +23,18 @@ set "i=0"
 set /a "i+=1"
 set /a "idx=i %% 4"
 call set "c=%%spin:~!idx!,1%%"
-set /p "=Updating... !c! "<nul
-choice /t 1 /d y /c y >nul 2>&1
+<nul set /p "=Updating... !c!  "
+ping -n 1 127.0.0.1 >nul
 set /a "elapsed+=1"
 if exist "%flag%" (
-    if !elapsed! geq 1 goto done
+    if !elapsed! geq 3 goto done
     goto spin
 )
 goto spin
 
 :done
 del "%flag%" 2>nul
+echo.
 echo Done.
 
 :skip
