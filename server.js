@@ -344,7 +344,7 @@ const server = http.createServer(async (req, res) => {
       const xaml = await buildXAML();
       res.writeHead(200, {
         "Content-Type": "application/xml; charset=utf-8",
-        "Cache-Control": "public, max-age=60",
+        "Cache-Control": "public, max-age=5",
       });
       res.end(xaml);
     } catch (err) {
