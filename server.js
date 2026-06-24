@@ -326,6 +326,8 @@ ${summaryCard}
     <StackPanel Margin="25,40,23,10">
         <TextBlock TextWrapping="Wrap" Margin="0,0,0,6"
                    Text="Mik Casual 是一个 Minecraft 生存服务器。本主页通过 MikWeb API 实时获取服务器数据。" />
+        <TextBlock TextWrapping="Wrap" Margin="0,8,0,6" Foreground="#CCAA55"
+                   Text="腐竹辛苦啦！考完就是胜利——分数锁不住你的世界线，前方还有大片未探索的区域。" />
         <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#666666" HorizontalAlignment="Center" Margin="0,10,0,0"
                    Text="更新时间: {time}  ·  PCL {pcl_version}  ·  Powered by MikWeb" />
     </StackPanel>
