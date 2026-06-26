@@ -280,7 +280,7 @@ ${items}
   }
 
   // 启动游戏按钮 — 用 \current 表示当前选中的 MC 版本，自动加入服务器
-  const launchBtn = `<local:MyButton Margin="0,0,0,0" Width="160" Height="36" Padding="20,0,20,0" ColorType="Highlight"
+  const launchBtn = `<local:MyButton Margin="0,0,0,0" Width="190" Height="36" Padding="20,0,20,0" ColorType="Highlight"
                         Text="🚀 启动游戏并加入服务器" EventType="启动游戏" EventData="\\current|${esc(SERVER_ADDR)}"
                         ToolTip="使用当前选中的 Minecraft 版本启动，并自动进入 ${esc(SERVER_ADDR)}" />`;
 
