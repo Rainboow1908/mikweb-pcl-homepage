@@ -312,25 +312,6 @@ ${items}
 </local:MyCard>`;
   }
 
-    // 回声洞 — 全部语录打乱顺序后轮流弹出
-  const pool = [...echoQuotes].sort(() => Math.random() - 0.5);
-  if (pool.length === 0) pool.push("今天也是方块人的一天！");
-  const echoBtns = pool
-    .map(
-      (q, i) =>
-        `            <local:MyButton Margin="10,0,0,0" Width="80" Height="36" Padding="0" ColorType="Highlight"
-                        Text="回声洞" ToolTip="随机语录" Visibility="{variable:echoBtn${i}:${i === 0 ? "Visible" : "Collapsed"}}">
-                <local:CustomEventService.Events>
-                    <local:CustomEventCollection>
-                        <local:CustomEvent Type="弹出窗口" Data="${esc("回声洞|" + q)}" />
-                        <local:CustomEvent Type="修改变量" Data="echoBtn${i}|Collapsed|-" />
-                        <local:CustomEvent Type="修改变量" Data="echoBtn${(i + 1) % pool.length}|Visible|-" />
-                    </local:CustomEventCollection>
-                </local:CustomEventService.Events>
-            </local:MyButton>`,
-    )
-    .join("\n");
-
   // 启动游戏按钮 — 用 \current 表示当前选中的 MC 版本，自动加入服务器
   const launchBtn = `<local:MyButton Margin="0,0,0,0" Width="190" Height="36" Padding="20,0,20,0" ColorType="Highlight"
                         Text="🚀 启动游戏并加入服务器" EventType="启动游戏" EventData="\\current|${esc(SERVER_ADDR)}"
@@ -348,7 +329,8 @@ ${items}
             <local:MyButton Margin="0,0,10,0" Width="80" Height="36" Padding="13,0,13,0"
                         Text="刷新" EventType="刷新主页" />
             ${launchBtn}
-${echoBtns}
+            <local:MyButton Margin="10,0,0,0" Width="80" Height="36" Padding="0" ColorType="Highlight"
+                        Text="回声洞" ToolTip="随机语录" EventType="弹出窗口" EventData="回声洞|{hint}" />
         </StackPanel>
         <TextBlock TextWrapping="Wrap" TextAlignment="Center" Foreground="#CCAA55" FontSize="12" Margin="0,14,0,0"
                    Text="Mik Casual 是高版本 Minecraft Java 版公益创造休闲服务器" />
