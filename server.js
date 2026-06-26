@@ -25,7 +25,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = parseInt(process.env.PORT || "38080", 10);
 const API_BASE = process.env.API_BASE || "https://mcmik.top/api";
 const SERVER_ADDR = process.env.SERVER_ADDR || "mcmik.top";
-const DISPLAY_ADDR = process.env.DISPLAY_ADDR || "mikserver.noctiro.moe";
+const DISPLAY_ADDR = process.env.DISPLAY_ADDR || "mcmik.top";
 
 let echoQuotes = [];
 try {
