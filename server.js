@@ -290,7 +290,7 @@ ${items}
     const items = buildings
       .map(
         (b) =>
-          `        <local:MyCard Title="${esc(b.name?.["zh-CN"] || b.name?.en || "?")}" Margin="0,0,0,10" CanSwap="True" IsSwapped="True">
+          `        <local:MyCard Title="${esc(b.name?.["zh-CN"] || b.name?.en || "?")}" Margin="0,0,0,10" CanSwap="True" IsSwapped="True" HasMouseAnimation="False">
             <StackPanel Margin="25,40,23,15">
                 <local:MyImage Height="150" HorizontalAlignment="Center" Source="${esc(b.images?.[0] || "")}" />
                 <StackPanel Margin="10,10,10,4">
