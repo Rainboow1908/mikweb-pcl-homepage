@@ -334,14 +334,30 @@ ${items}
                 <local:CustomEventService.Events>
                     <local:CustomEventCollection>
                         <local:CustomEvent Type="修改变量" Data="echoText|>_ ${esc(echoQuotes[Math.floor(Math.random() * echoQuotes.length)] || "今天也是方块人的一天！")}|-" />
-                        <local:CustomEvent Type="刷新主页" Data="-" />
                     </local:CustomEventCollection>
                 </local:CustomEventService.Events>
             </local:MyButton>
         </StackPanel>
-        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Foreground="#CCAA55" FontSize="12" Margin="0,14,0,0"
+        <TextBlock x:Name="EchoText" TextWrapping="Wrap" TextAlignment="Center" Foreground="#CCAA55" FontSize="12" Margin="0,14,0,0"
                    Text="{variable:echoText:腐竹辛苦啦！考完就是胜利——分数锁不住你的世界线，前方还有大片未探索的区域。}" />
     </StackPanel>
+    <StackPanel.Triggers>
+        <EventTrigger RoutedEvent="StackPanel.Loaded">
+            <BeginStoryboard>
+                <Storyboard RepeatBehavior="Forever">
+                    <ColorAnimation BeginTime="0:0:0" Storyboard.TargetName="EchoText"
+                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                        From="#CCAA55" To="#885522" Duration="0:0:0.15" AutoReverse="True" />
+                    <ColorAnimation BeginTime="0:0:1.5" Storyboard.TargetName="EchoText"
+                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                        From="#885522" To="#553311" Duration="0:0:0.1" AutoReverse="True" />
+                    <ColorAnimation BeginTime="0:0:3" Storyboard.TargetName="EchoText"
+                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
+                        From="#553311" To="#CCAA55" Duration="0:0:0.3" AutoReverse="True" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </StackPanel.Triggers>
 </local:MyCard>
 
 ${playerCard}
