@@ -312,9 +312,9 @@ ${items}
 </local:MyCard>`;
   }
 
-    // 回声洞 — 5 条随机语录轮流弹出（无需刷新）
-  const shuffled = [...echoQuotes].sort(() => Math.random() - 0.5).slice(0, 5);
-  const echoBtns = shuffled
+    // 回声洞 — 全部语录轮流弹出（点击一次出一条，不刷新）
+  const pool = echoQuotes.length > 0 ? echoQuotes : ["今天也是方块人的一天！"];
+  const echoBtns = pool
     .map(
       (q, i) =>
         `            <local:MyButton Margin="10,0,0,0" Width="80" Height="36" Padding="0" ColorType="Highlight"
@@ -323,7 +323,7 @@ ${items}
                     <local:CustomEventCollection>
                         <local:CustomEvent Type="弹出窗口" Data="${esc("回声洞|" + q)}" />
                         <local:CustomEvent Type="修改变量" Data="echoBtn${i}|Collapsed|-" />
-                        <local:CustomEvent Type="修改变量" Data="echoBtn${(i + 1) % 5}|Visible|-" />
+                        <local:CustomEvent Type="修改变量" Data="echoBtn${(i + 1) % pool.length}|Visible|-" />
                     </local:CustomEventCollection>
                 </local:CustomEventService.Events>
             </local:MyButton>`,
