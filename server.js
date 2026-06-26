@@ -9,7 +9,8 @@
  * 环境变量 (可选):
  *   PORT          - 监听端口 (默认 38080)
  *   API_BASE      - MikWeb API 地址 (默认 https://mcmik.top/api)
- *   SERVER_ADDR   - MC 服务器地址 (默认 noctiro.moe)
+ *   SERVER_ADDR   - MC 启动地址 (默认 mcmik.top)
+ *   DISPLAY_ADDR  - 页面显示的地址 (默认 mikserver.noctiro.moe)
  *   VERSION       - 2026.06.21
  */
 
@@ -18,7 +19,8 @@ import https from "node:https";
 
 const PORT = parseInt(process.env.PORT || "38080", 10);
 const API_BASE = process.env.API_BASE || "https://mcmik.top/api";
-const SERVER_ADDR = process.env.SERVER_ADDR || "noctiro.moe";
+const SERVER_ADDR = process.env.SERVER_ADDR || "mcmik.top";
+const DISPLAY_ADDR = process.env.DISPLAY_ADDR || "mikserver.noctiro.moe";
 
 // ── 工具: JSON fetch + 缓存 ──────────────────────────────────────
 
@@ -289,7 +291,7 @@ ${items}
         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
             <TextBlock Text="●" FontSize="14" Foreground="${esc(statusColor)}" Margin="0,0,6,0" VerticalAlignment="Center" />
             <TextBlock Text="${esc(statusText)}" FontSize="16" Foreground="${esc(statusColor)}" VerticalAlignment="Center" />
-            <TextBlock Text="   ${esc(SERVER_ADDR)}" FontSize="13" Foreground="#888888" VerticalAlignment="Center" Margin="8,0,0,0" />
+            <TextBlock Text="   ${esc(DISPLAY_ADDR)}" FontSize="13" Foreground="#888888" VerticalAlignment="Center" Margin="8,0,0,0" />
         </StackPanel>
         <local:MyHint Text="点击下方按钮即可一键启动游戏并加入服务器！" Theme="Blue" Margin="0,0,0,12" />
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
