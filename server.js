@@ -96,9 +96,9 @@ async function getHistorySummary() {
   return data?.summary || null;
 }
 
-async function getBuildingCount() {
+async function getBuildings() {
   const list = await fetchWithCache("buildings", `${API_BASE}/buildings`, null);
-  return Array.isArray(list) ? list.length : null;
+  return Array.isArray(list) ? list : null;
 }
 
 async function getBans() {
@@ -146,14 +146,14 @@ async function buildXAML() {
     getOnlinePlayers(),
     getAnnouncements(5),
     getHistorySummary(),
-    getBuildingCount(),
+    getBuildings(),
     getBans(),
   ]);
 
   const players   = results[0].status === "fulfilled" ? results[0].value : { online: -1, players: [] };
   const anns      = results[1].status === "fulfilled" ? results[1].value : [];
   const summary   = results[2].status === "fulfilled" ? results[2].value : null;
-  const buildingCount = results[3].status === "fulfilled" ? results[3].value : null;
+  const buildings = results[3].status === "fulfilled" ? results[3].value : null;
   const bans      = results[4].status === "fulfilled" ? results[4].value : null;
 
   const online = players.online ?? -1;
@@ -257,7 +257,7 @@ ${items}
 </local:MyCard>`;
   }
 
-  // 数据摘要（历史 + 建筑）
+  // 服务器数据摘要
   let summaryCard = "";
   const sp = [];
   if (summary) {
@@ -265,7 +265,6 @@ ${items}
     if (summary.avg_online != null) sp.push(`📊 平均在线：${Number(summary.avg_online).toFixed(1)} 人`);
     if (summary.total_unique_players != null) sp.push(`👥 独立玩家：${summary.total_unique_players} 人`);
   }
-  if (buildingCount != null) sp.push(`🏗️ 建筑作品：${buildingCount} 个`);
 
   if (sp.length > 0) {
     summaryCard = `<local:MyCard Title="服务器数据" Margin="0,0,0,15" CanSwap="True" IsSwapped="False">
@@ -273,10 +272,22 @@ ${items}
         <TextBlock TextWrapping="Wrap" Text="${esc(sp.join("  ·  "))}" />
     </StackPanel>
 </local:MyCard>`;
-  } else {
-    summaryCard = `<local:MyCard Title="服务器数据" Margin="0,0,0,15" CanSwap="True">
+  }
+
+  // 建筑展示
+  let buildingCard = "";
+  if (buildings && buildings.length > 0) {
+    const items = buildings
+      .map(
+        (b) =>
+          `<local:MyListItem Margin="-5,2,-5,5"
+                          Title="${esc(b.name?.["zh-CN"] || b.name?.en || "?")}" Info="${esc((b.description?.["zh-CN"] || b.description?.en || "").slice(0, 50))}  ·  [${b.coordinates?.x ?? "?"}, ${b.coordinates?.y ?? "?"}, ${b.coordinates?.z ?? "?"}]"
+                          EventType="打开网页" EventData="https://mcmik.top/buildings" Type="Clickable" />`,
+      )
+      .join("\n");
+    buildingCard = `<local:MyCard Title="建筑展示 (${buildings.length})" Margin="0,0,0,15" CanSwap="True">
     <StackPanel Margin="25,40,23,15">
-        <TextBlock TextWrapping="Wrap" Text="暂无法获取统计数据" />
+${items}
     </StackPanel>
 </local:MyCard>`;
   }
@@ -308,6 +319,7 @@ ${playerCard}
 ${annCard}
 ${banCard}
 ${summaryCard}
+${buildingCard}
 
 <local:MyCard Title="网页入口" Margin="0,0,0,15" CanSwap="True" IsSwapped="True">
     <StackPanel Margin="25,40,23,15">
