@@ -326,7 +326,7 @@ ${items}
         </StackPanel>
         <local:MyHint Text="点击下方按钮即可一键启动游戏并加入服务器！" Theme="Blue" Margin="0,0,0,12" />
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-            <local:MyButton Margin="0,0,10,0" Width="80" Height="36" Padding="13,0,13,0"
+            <local:MyButton Margin="0,0,10,0" Width="80" Height="36" Padding="13,0,13,0" ColorType="Highlight"
                         Text="刷新" EventType="刷新主页" />
             ${launchBtn}
             <local:MyButton Margin="10,0,0,0" Width="80" Height="36" Padding="0" ColorType="Highlight"
