@@ -312,8 +312,9 @@ ${items}
 </local:MyCard>`;
   }
 
-    // 回声洞 — 全部语录轮流弹出（点击一次出一条，不刷新）
-  const pool = echoQuotes.length > 0 ? echoQuotes : ["今天也是方块人的一天！"];
+    // 回声洞 — 全部语录打乱顺序后轮流弹出
+  const pool = [...echoQuotes].sort(() => Math.random() - 0.5);
+  if (pool.length === 0) pool.push("今天也是方块人的一天！");
   const echoBtns = pool
     .map(
       (q, i) =>
