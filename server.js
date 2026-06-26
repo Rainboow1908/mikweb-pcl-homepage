@@ -362,6 +362,9 @@ ${buildingCard}
         <local:MyListItem Margin="-5,2,-5,5"
                           Title="Wiki" Info="服务器帮助文档"
                           EventType="打开网页" EventData="https://mcmik.top/wiki" Type="Clickable" />
+        <local:MyListItem Margin="-5,2,-5,5"
+                          Title="服务器地图" Info="在线地图"
+                          EventType="打开网页" EventData="https://mcmik.top/zh-CN/map" Type="Clickable" />
     </StackPanel>
 </local:MyCard>
 
