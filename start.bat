@@ -1,6 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 cd /d "%~dp0"
+taskkill /f /im node.exe 2>nul
 
 git fetch 2>nul
 git status -uno 2>nul | find "Your branch is behind" >nul
