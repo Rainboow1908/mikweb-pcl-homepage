@@ -280,7 +280,7 @@ ${items}
   }
 
   // 启动游戏按钮 — 用 \current 表示当前选中的 MC 版本，自动加入服务器
-  const launchBtn = `<local:MyButton Margin="0,0,0,0" Width="260" Height="42" Padding="20,0,20,0" ColorType="Highlight"
+  const launchBtn = `<local:MyButton Margin="0,0,0,0" Width="160" Height="36" Padding="20,0,20,0" ColorType="Highlight"
                         Text="🚀 启动游戏并加入服务器" EventType="启动游戏" EventData="\\current|${esc(SERVER_ADDR)}"
                         ToolTip="使用当前选中的 Minecraft 版本启动，并自动进入 ${esc(SERVER_ADDR)}" />`;
 
@@ -292,14 +292,10 @@ ${items}
             <TextBlock Text="   ${esc(SERVER_ADDR)}" FontSize="13" Foreground="#888888" VerticalAlignment="Center" Margin="8,0,0,0" />
         </StackPanel>
         <local:MyHint Text="点击下方按钮即可一键启动游戏并加入服务器！" Theme="Blue" Margin="0,0,0,12" />
-        <StackPanel HorizontalAlignment="Center">
-            ${launchBtn}
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,12,0,0">
-            <local:MyButton Margin="0,0,10,0" Width="125" Height="42" Padding="13,0,13,0"
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <local:MyButton Margin="0,0,10,0" Width="90" Height="36" Padding="13,0,13,0"
                         Text="刷新" EventType="刷新主页" />
-            <local:MyButton Margin="0,0,0,0" Width="125" Height="42" Padding="13,0,13,0"
-                        Text="复制 IP" EventType="复制文本" EventData="${esc(SERVER_ADDR)}" />
+            ${launchBtn}
         </StackPanel>
         <TextBlock TextWrapping="Wrap" TextAlignment="Center" Foreground="#CCAA55" FontSize="12" Margin="0,14,0,0"
                    Text="腐竹辛苦啦！考完就是胜利——分数锁不住你的世界线，前方还有大片未探索的区域。" />
