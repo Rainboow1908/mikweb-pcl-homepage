@@ -279,15 +279,23 @@ ${items}
   if (buildings && buildings.length > 0) {
     const items = buildings
       .map(
-        (b) =>
-          `<local:MyListItem Margin="-5,2,-5,5"
-                          Logo="${esc((b.images && b.images[0]) ? b.images[0] : "")}" Title="${esc(b.name?.["zh-CN"] || b.name?.en || "?")}" Info="${esc((b.description?.["zh-CN"] || b.description?.en || "").slice(0, 50))}  ·  [${b.coordinates?.x ?? "?"}, ${b.coordinates?.y ?? "?"}, ${b.coordinates?.z ?? "?"}]"
-                          EventType="打开网页" EventData="https://mcmik.top/buildings" Type="Clickable" />`,
+        (b, i) =>
+          `            <StackPanel Margin="0,${i > 0 ? "14" : "0"},0,0">
+                <local:MyImage Height="120" HorizontalAlignment="Center" Source="${esc(b.images?.[0] || "")}" />
+                <TextBlock TextWrapping="Wrap" FontWeight="Bold" Margin="0,6,0,2" HorizontalAlignment="Center"
+                           Text="${esc(b.name?.["zh-CN"] || b.name?.en || "?")}" />
+                <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888888" HorizontalAlignment="Center"
+                           Text="${esc((b.description?.["zh-CN"] || b.description?.en || "").slice(0, 80))}" />
+                <TextBlock TextWrapping="Wrap" FontSize="10" Foreground="#666666" HorizontalAlignment="Center"
+                           Text="[${b.coordinates?.x ?? "?"}, ${b.coordinates?.y ?? "?"}, ${b.coordinates?.z ?? "?"}]  ·  ${b.buildType === "replica" ? "复刻" : "原创"}" />
+            </StackPanel>`,
       )
       .join("\n");
     buildingCard = `<local:MyCard Title="建筑展示 (${buildings.length})" Margin="0,0,0,15" CanSwap="True">
     <StackPanel Margin="25,40,23,15">
 ${items}
+        <local:MyButton Margin="0,14,0,0" Height="32" HorizontalAlignment="Center" Padding="20,0,20,0"
+                        Text="查看全部建筑" EventType="打开网页" EventData="https://mcmik.top/buildings" />
     </StackPanel>
 </local:MyCard>`;
   }
