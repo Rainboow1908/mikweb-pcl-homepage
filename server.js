@@ -353,6 +353,7 @@ ${items}
                 <local:CustomEventService.Events>
                     <local:CustomEventCollection>
                         <local:CustomEvent Type="修改变量" Data="echoText|>_ ${esc(echoQuotes[Math.floor(Math.random() * echoQuotes.length)] || "今天也是方块人的一天！")}|-" />
+                        <local:CustomEvent Type="刷新主页" Data="-" />
                     </local:CustomEventCollection>
                 </local:CustomEventService.Events>
             </local:MyButton>
