@@ -52,7 +52,7 @@ http://localhost:38080/pcl-homepage.xaml
 | 变量 | 默认值 | 说明 |
 |------|--------|------|
 | `PORT` | `38080` | HTTP 监听端口 |
-| `API_BASE` | `https://mik.noctiro.moe/api` | MikWeb API 地址 |
+| `API_BASE` | `https://mcmik.top/api` | MikWeb API 地址 |
 | `SERVER_ADDR` | `noctiro.moe` | 显示的 MC 连接地址 |
 
 示例：

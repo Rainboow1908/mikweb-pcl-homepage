@@ -8,7 +8,7 @@
  *
  * 环境变量 (可选):
  *   PORT          - 监听端口 (默认 38080)
- *   API_BASE      - MikWeb API 地址 (默认 https://mik.noctiro.moe/api)
+ *   API_BASE      - MikWeb API 地址 (默认 https://mcmik.top/api)
  *   SERVER_ADDR   - MC 服务器地址 (默认 noctiro.moe)
  *   VERSION       - 2026.06.21
  */
@@ -17,7 +17,7 @@ import http from "node:http";
 import https from "node:https";
 
 const PORT = parseInt(process.env.PORT || "38080", 10);
-const API_BASE = process.env.API_BASE || "https://mik.noctiro.moe/api";
+const API_BASE = process.env.API_BASE || "https://mcmik.top/api";
 const SERVER_ADDR = process.env.SERVER_ADDR || "noctiro.moe";
 
 // ── 工具: JSON fetch + 缓存 ──────────────────────────────────────
@@ -317,10 +317,10 @@ ${summaryCard}
                    Text="以下入口将在浏览器中打开对应页面。" />
         <local:MyListItem Margin="-5,2,-5,5"
                           Title="建筑展示" Info="查看所有建筑作品详情"
-                          EventType="打开网页" EventData="https://mik.noctiro.moe/buildings" Type="Clickable" />
+                          EventType="打开网页" EventData="https://mcmik.top/buildings" Type="Clickable" />
         <local:MyListItem Margin="-5,2,-5,5"
                           Title="Wiki" Info="服务器帮助文档"
-                          EventType="打开网页" EventData="https://mik.noctiro.moe/wiki" Type="Clickable" />
+                          EventType="打开网页" EventData="https://mcmik.top/wiki" Type="Clickable" />
     </StackPanel>
 </local:MyCard>
 
