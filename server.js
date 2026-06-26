@@ -361,7 +361,6 @@ ${items}
                    Text="{variable:echoText:腐竹辛苦啦！考完就是胜利——分数锁不住你的世界线，前方还有大片未探索的区域。}" />
     </StackPanel>
 </local:MyCard>
-</local:MyCard>
 
 ${playerCard}
 ${annCard}
