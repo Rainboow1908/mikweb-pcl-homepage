@@ -359,7 +359,7 @@ ${buildingCard}
 <local:MyCard Title="关于" Margin="0,0,0,15" CanSwap="True" IsSwapped="True">
     <StackPanel Margin="25,40,23,10">
         <TextBlock TextWrapping="Wrap" Margin="0,0,0,6"
-                   Text="Mik Casual 是一个 Minecraft 生存服务器。本主页通过 MikWeb API 实时获取服务器数据。" />
+                   Text="Mik Casual 是高版本 Minecraft Java 版公益创造休闲服务器。本主页通过 MikWeb API 实时获取服务器数据。" />
         <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#666666" HorizontalAlignment="Center" Margin="0,10,0,0"
                    Text="更新时间: {time}  ·  PCL {pcl_version}  ·  Powered by MikWeb" />
     </StackPanel>
