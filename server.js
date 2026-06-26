@@ -277,24 +277,29 @@ ${items}
   // 建筑展示
   let buildingCard = "";
   if (buildings && buildings.length > 0) {
-    buildingCard = buildings
+    const items = buildings
       .map(
         (b) =>
-          `<local:MyCard Title="${esc(b.name?.["zh-CN"] || b.name?.en || "?")}" Margin="0,0,0,15" CanSwap="True" IsSwapped="True">
-    <StackPanel Margin="25,30,23,15">
-        <local:MyImage Height="150" HorizontalAlignment="Center" Source="${esc(b.images?.[0] || "")}" />
-        <StackPanel Margin="10,10,10,4">
-            <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#BBBBBB"
-                       Text="${esc(b.description?.["zh-CN"] || b.description?.en || "")}" />
-            <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888888" Margin="0,6,0,0"
-                       Text="坐标: [${b.coordinates?.x ?? "?"}, ${b.coordinates?.y ?? "?"}, ${b.coordinates?.z ?? "?"}]  ·  ${b.buildType === "replica" ? "复刻" : "原创"}" />
-            <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888888"
-                       Text="建设者: ${esc((b.builders || []).map(bd => bd.name).join(", "))}" />
-        </StackPanel>
-    </StackPanel>
-</local:MyCard>`,
+          `        <local:MyCard Title="${esc(b.name?.["zh-CN"] || b.name?.en || "?")}" Margin="0,0,0,10" CanSwap="True" IsSwapped="True">
+            <StackPanel Margin="25,30,23,15">
+                <local:MyImage Height="150" HorizontalAlignment="Center" Source="${esc(b.images?.[0] || "")}" />
+                <StackPanel Margin="10,10,10,4">
+                    <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#BBBBBB"
+                               Text="${esc(b.description?.["zh-CN"] || b.description?.en || "")}" />
+                    <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888888" Margin="0,6,0,0"
+                               Text="坐标: [${b.coordinates?.x ?? "?"}, ${b.coordinates?.y ?? "?"}, ${b.coordinates?.z ?? "?"}]  ·  ${b.buildType === "replica" ? "复刻" : "原创"}" />
+                    <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#888888"
+                               Text="建设者: ${esc((b.builders || []).map(bd => bd.name).join(", "))}" />
+                </StackPanel>
+            </StackPanel>
+        </local:MyCard>`,
       )
       .join("\n");
+    buildingCard = `<local:MyCard Title="建筑收录 (${buildings.length})" Margin="0,0,0,15" CanSwap="True">
+    <StackPanel Margin="25,40,23,15">
+${items}
+    </StackPanel>
+</local:MyCard>`;
   }
 
   // 启动游戏按钮 — 用 \current 表示当前选中的 MC 版本，自动加入服务器
