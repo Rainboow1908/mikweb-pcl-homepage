@@ -281,7 +281,7 @@ ${items}
       .map(
         (b) =>
           `<local:MyListItem Margin="-5,2,-5,5"
-                          Title="${esc(b.name?.["zh-CN"] || b.name?.en || "?")}" Info="${esc((b.description?.["zh-CN"] || b.description?.en || "").slice(0, 50))}  ·  [${b.coordinates?.x ?? "?"}, ${b.coordinates?.y ?? "?"}, ${b.coordinates?.z ?? "?"}]"
+                          Logo="${esc((b.images && b.images[0]) ? b.images[0] : "")}" Title="${esc(b.name?.["zh-CN"] || b.name?.en || "?")}" Info="${esc((b.description?.["zh-CN"] || b.description?.en || "").slice(0, 50))}  ·  [${b.coordinates?.x ?? "?"}, ${b.coordinates?.y ?? "?"}, ${b.coordinates?.z ?? "?"}]"
                           EventType="打开网页" EventData="https://mcmik.top/buildings" Type="Clickable" />`,
       )
       .join("\n");
