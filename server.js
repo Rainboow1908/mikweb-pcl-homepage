@@ -312,6 +312,12 @@ ${items}
 </local:MyCard>`;
   }
 
+    // 回声洞语录池 - 打乱取前 5 条
+  const shuffled = [...echoQuotes].sort(() => Math.random() - 0.5).slice(0, 5);
+  const echoEvents = shuffled
+    .map((q) => `                        <local:CustomEvent Type="弹出窗口" Data="${esc("回声洞|" + q)}" />`)
+    .join("\n");
+
   // 启动游戏按钮 — 用 \current 表示当前选中的 MC 版本，自动加入服务器
   const launchBtn = `<local:MyButton Margin="0,0,0,0" Width="190" Height="36" Padding="20,0,20,0" ColorType="Highlight"
                         Text="🚀 启动游戏并加入服务器" EventType="启动游戏" EventData="\\current|${esc(SERVER_ADDR)}"
@@ -330,11 +336,10 @@ ${items}
                         Text="刷新" EventType="刷新主页" />
             ${launchBtn}
             <local:MyButton Margin="10,0,0,0" Width="80" Height="36" Padding="0" ColorType="Highlight"
-                        Text="回声洞" ToolTip="随机语录">
+                        Text="回声洞" ToolTip="随机语录，每次刷新页面可看到不同语录">
                 <local:CustomEventService.Events>
                     <local:CustomEventCollection>
-                        <local:CustomEvent Type="弹出窗口" Data="回声洞|${esc(echoQuotes[Math.floor(Math.random() * echoQuotes.length)] || "今天也是方块人的一天！")}" />
-                        <local:CustomEvent Type="刷新主页" Data="-" />
+${echoEvents}
                     </local:CustomEventCollection>
                 </local:CustomEventService.Events>
             </local:MyButton>
@@ -383,7 +388,7 @@ const server = http.createServer(async (req, res) => {
       const xaml = await buildXAML();
       res.writeHead(200, {
         "Content-Type": "application/xml; charset=utf-8",
-        "Cache-Control": "public, max-age=5",
+        "Cache-Control": "no-cache",
       });
       res.end(xaml);
     } catch (err) {
