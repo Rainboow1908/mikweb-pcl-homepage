@@ -281,7 +281,7 @@ ${items}
       .map(
         (b) =>
           `        <local:MyCard Title="${esc(b.name?.["zh-CN"] || b.name?.en || "?")}" Margin="0,0,0,10" CanSwap="True" IsSwapped="True">
-            <StackPanel Margin="25,30,23,15">
+            <StackPanel Margin="25,40,23,15">
                 <local:MyImage Height="150" HorizontalAlignment="Center" Source="${esc(b.images?.[0] || "")}" />
                 <StackPanel Margin="10,10,10,4">
                     <TextBlock TextWrapping="Wrap" FontSize="12" Foreground="#BBBBBB"
