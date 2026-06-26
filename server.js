@@ -317,26 +317,7 @@ ${items}
                         Text="🚀 启动游戏并加入服务器" EventType="启动游戏" EventData="\\current|${esc(SERVER_ADDR)}"
                         ToolTip="使用当前选中的 Minecraft 版本启动，并自动进入 ${esc(SERVER_ADDR)}" />`;
 
-  return `<StackPanel>
-    <StackPanel.Triggers>
-        <EventTrigger RoutedEvent="StackPanel.Loaded">
-            <BeginStoryboard>
-                <Storyboard RepeatBehavior="Forever">
-                    <ColorAnimation BeginTime="0:0:0" Storyboard.TargetName="EchoText"
-                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                        From="#CCAA55" To="#885522" Duration="0:0:0.15" AutoReverse="True" />
-                    <ColorAnimation BeginTime="0:0:1.5" Storyboard.TargetName="EchoText"
-                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                        From="#885522" To="#553311" Duration="0:0:0.1" AutoReverse="True" />
-                    <ColorAnimation BeginTime="0:0:3" Storyboard.TargetName="EchoText"
-                        Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                        From="#553311" To="#CCAA55" Duration="0:0:0.3" AutoReverse="True" />
-                </Storyboard>
-            </BeginStoryboard>
-        </EventTrigger>
-    </StackPanel.Triggers>
-
-<local:MyCard Title="Mik Casual 服务器状态" Margin="0,0,0,15" CanSwap="True" IsSwapped="False">
+  return `<local:MyCard Title="Mik Casual 服务器状态" Margin="0,0,0,15" CanSwap="True" IsSwapped="False">
     <StackPanel Margin="25,40,23,15">
         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
             <TextBlock Text="●" FontSize="14" Foreground="${esc(statusColor)}" Margin="0,0,6,0" VerticalAlignment="Center" />
@@ -349,17 +330,10 @@ ${items}
                         Text="刷新" EventType="刷新主页" />
             ${launchBtn}
             <local:MyButton Margin="10,0,0,0" Width="72" Height="36" Padding="0" ColorType="Highlight"
-                        Text="回声洞" ToolTip="随机语录">
-                <local:CustomEventService.Events>
-                    <local:CustomEventCollection>
-                        <local:CustomEvent Type="修改变量" Data="echoText|>_ ${esc(echoQuotes[Math.floor(Math.random() * echoQuotes.length)] || "今天也是方块人的一天！")}|-" />
-                        <local:CustomEvent Type="刷新主页" Data="-" />
-                    </local:CustomEventCollection>
-                </local:CustomEventService.Events>
-            </local:MyButton>
+                        Text="回声洞" ToolTip="随机语录" EventType="弹出窗口" EventData="回声洞|${esc(echoQuotes[Math.floor(Math.random() * echoQuotes.length)] || "今天也是方块人的一天！")}" />
         </StackPanel>
-        <TextBlock x:Name="EchoText" TextWrapping="Wrap" TextAlignment="Center" Foreground="#CCAA55" FontSize="12" Margin="0,14,0,0"
-                   Text="{variable:echoText:腐竹辛苦啦！考完就是胜利——分数锁不住你的世界线，前方还有大片未探索的区域。}" />
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center" Foreground="#CCAA55" FontSize="12" Margin="0,14,0,0"
+                   Text="Mik Casual 是高版本 Minecraft Java 版公益创造休闲服务器" />
     </StackPanel>
 </local:MyCard>
 
@@ -389,8 +363,7 @@ ${buildingCard}
         <TextBlock TextWrapping="Wrap" FontSize="11" Foreground="#666666" HorizontalAlignment="Center" Margin="0,10,0,0"
                    Text="更新时间: {time}  ·  PCL {pcl_version}  ·  Powered by MikWeb" />
     </StackPanel>
-</local:MyCard>
-</StackPanel>`;
+</local:MyCard>`;
 }
 
 // ── HTTP 服务器 ───────────────────────────────────────────────────
