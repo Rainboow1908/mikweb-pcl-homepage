@@ -8,7 +8,7 @@
  *
  * 环境变量 (可选):
  *   PORT          - 监听端口 (默认 38080)
- *   API_BASE      - MikWeb API 地址 (默认 https://mcmik.top/api)
+ *   API_BASE      - MikWeb API 地址 (默认 https://data.mcmik.top/api)
  *   SERVER_ADDR   - MC 启动地址 (默认 mcmik.top)
  *   DISPLAY_ADDR  - 页面显示的地址 (默认 mikserver.noctiro.moe)
  *   VERSION       - 2026.06.21
