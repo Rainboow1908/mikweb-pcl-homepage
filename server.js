@@ -312,15 +312,7 @@ ${items}
 </local:MyCard>`;
   }
 
-  // Echo cave buttons (all quotes, shuffled, cycled without refresh)
-  const pool = [...echoQuotes].sort(() => Math.random() - 0.5);
-  if (pool.length === 0) pool.push("Today is a blocky day!");
-  const echoBtns = pool.map((q, i) => {
-    const next = (i + 1) % pool.length;
-    return `<local:MyButton Margin="10,0,0,0" Width="80" Height="36" Padding="0" ColorType="Highlight" Text="回声洞" ToolTip="随机语录" Visibility="{variable:echoBtn${i}:${i === 0 ? "Visible" : "Collapsed"}}"><local:CustomEventService.Events><local:CustomEventCollection><local:CustomEvent Type="弹出窗口" Data="${esc("回声洞|" + q)}"/><local:CustomEvent Type="修改变量" Data="echoBtn${i}|Collapsed|-"/><local:CustomEvent Type="修改变量" Data="echoBtn${next}|Visible|-"/></local:CustomEventCollection></local:CustomEventService.Events></local:MyButton>`;
-  }).join("\n");
-
-  // Launch button
+  // 启动游戏按钮 — 用 \current 表示当前选中的 MC 版本，自动加入服务器
   const launchBtn = `<local:MyButton Margin="0,0,0,0" Width="190" Height="36" Padding="20,0,20,0" ColorType="Highlight"
                         Text="🚀 启动游戏并加入服务器" EventType="启动游戏" EventData="\\current|${esc(SERVER_ADDR)}"
                         ToolTip="使用当前选中的 Minecraft 版本启动，并自动进入 ${esc(SERVER_ADDR)}" />`;
@@ -337,7 +329,15 @@ ${items}
             <local:MyButton Margin="0,0,10,0" Width="80" Height="36" Padding="13,0,13,0"
                         Text="刷新" EventType="刷新主页" />
             ${launchBtn}
-${echoBtns}
+            <local:MyButton Margin="10,0,0,0" Width="80" Height="36" Padding="0" ColorType="Highlight"
+                        Text="回声洞" ToolTip="点击弹出随机语录">
+                <local:CustomEventService.Events>
+                    <local:CustomEventCollection>
+                        <local:CustomEvent Type="弹出窗口" Data="回声洞|${esc(echoQuotes[Math.floor(Math.random() * echoQuotes.length)] || "今天也是方块人的一天！")}" />
+                        <local:CustomEvent Type="刷新主页" Data="-" />
+                    </local:CustomEventCollection>
+                </local:CustomEventService.Events>
+            </local:MyButton>
         </StackPanel>
         <TextBlock TextWrapping="Wrap" TextAlignment="Center" Foreground="#CCAA55" FontSize="12" Margin="0,14,0,0"
                    Text="Mik Casual 是高版本 Minecraft Java 版公益创造休闲服务器" />
