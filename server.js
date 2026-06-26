@@ -312,10 +312,22 @@ ${items}
 </local:MyCard>`;
   }
 
-    // 回声洞语录池 - 打乱取前 5 条
+    // 回声洞 — 5 条随机语录轮流弹出（无需刷新）
   const shuffled = [...echoQuotes].sort(() => Math.random() - 0.5).slice(0, 5);
-  const echoEvents = shuffled
-    .map((q) => `                        <local:CustomEvent Type="弹出窗口" Data="${esc("回声洞|" + q)}" />`)
+  const echoBtns = shuffled
+    .map(
+      (q, i) =>
+        `            <local:MyButton Margin="10,0,0,0" Width="80" Height="36" Padding="0" ColorType="Highlight"
+                        Text="回声洞" ToolTip="随机语录" Visibility="{variable:echoBtn${i}:${i === 0 ? "Visible" : "Collapsed"}}">
+                <local:CustomEventService.Events>
+                    <local:CustomEventCollection>
+                        <local:CustomEvent Type="弹出窗口" Data="${esc("回声洞|" + q)}" />
+                        <local:CustomEvent Type="修改变量" Data="echoBtn${i}|Collapsed|-" />
+                        <local:CustomEvent Type="修改变量" Data="echoBtn${(i + 1) % 5}|Visible|-" />
+                    </local:CustomEventCollection>
+                </local:CustomEventService.Events>
+            </local:MyButton>`,
+    )
     .join("\n");
 
   // 启动游戏按钮 — 用 \current 表示当前选中的 MC 版本，自动加入服务器
@@ -335,14 +347,7 @@ ${items}
             <local:MyButton Margin="0,0,10,0" Width="80" Height="36" Padding="13,0,13,0"
                         Text="刷新" EventType="刷新主页" />
             ${launchBtn}
-            <local:MyButton Margin="10,0,0,0" Width="80" Height="36" Padding="0" ColorType="Highlight"
-                        Text="回声洞" ToolTip="随机语录，每次刷新页面可看到不同语录">
-                <local:CustomEventService.Events>
-                    <local:CustomEventCollection>
-${echoEvents}
-                    </local:CustomEventCollection>
-                </local:CustomEventService.Events>
-            </local:MyButton>
+${echoBtns}
         </StackPanel>
         <TextBlock TextWrapping="Wrap" TextAlignment="Center" Foreground="#CCAA55" FontSize="12" Margin="0,14,0,0"
                    Text="Mik Casual 是高版本 Minecraft Java 版公益创造休闲服务器" />
