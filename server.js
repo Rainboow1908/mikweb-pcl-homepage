@@ -23,7 +23,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const PORT = parseInt(process.env.PORT || "38080", 10);
-const API_BASE = process.env.API_BASE || "https://mcmik.top/api";
+const API_BASE = process.env.API_BASE || "https://data.mcmik.top/api";
 const SERVER_ADDR = process.env.SERVER_ADDR || "mcmik.top";
 const DISPLAY_ADDR = process.env.DISPLAY_ADDR || "mcmik.top";
 
@@ -90,7 +90,7 @@ async function fetchWithCache(key, url, fallback) {
 async function getOnlinePlayers() {
   const data = await fetchWithCache(
     "online",
-    `${API_BASE}/players/online`,
+    `${API_BASE}/players`,
     { online: -1, players: [] },
   );
   return data;
@@ -99,11 +99,6 @@ async function getOnlinePlayers() {
 async function getAnnouncements(count = 5) {
   const list = await fetchWithCache("announcements", `${API_BASE}/announcements`, []);
   return Array.isArray(list) ? list.slice(0, count) : [];
-}
-
-async function getHistorySummary() {
-  const data = await fetchWithCache("history", `${API_BASE}/players/history`, null);
-  return data?.summary || null;
 }
 
 async function getBuildings() {
@@ -155,16 +150,14 @@ async function buildXAML() {
   const results = await Promise.allSettled([
     getOnlinePlayers(),
     getAnnouncements(5),
-    getHistorySummary(),
     getBuildings(),
     getBans(),
   ]);
 
   const players   = results[0].status === "fulfilled" ? results[0].value : { online: -1, players: [] };
   const anns      = results[1].status === "fulfilled" ? results[1].value : [];
-  const summary   = results[2].status === "fulfilled" ? results[2].value : null;
-  const buildings = results[3].status === "fulfilled" ? results[3].value : null;
-  const bans      = results[4].status === "fulfilled" ? results[4].value : null;
+  const buildings = results[2].status === "fulfilled" ? results[2].value : null;
+  const bans      = results[3].status === "fulfilled" ? results[3].value : null;
 
   const online = players.online ?? -1;
   const playerList = players.players ?? [];
@@ -267,23 +260,6 @@ ${items}
 </local:MyCard>`;
   }
 
-  // 服务器数据摘要
-  let summaryCard = "";
-  const sp = [];
-  if (summary) {
-    if (summary.peak_online != null) sp.push(`📈 历史峰值：${summary.peak_online} 人`);
-    if (summary.avg_online != null) sp.push(`📊 平均在线：${Number(summary.avg_online).toFixed(1)} 人`);
-    if (summary.total_unique_players != null) sp.push(`👥 独立玩家：${summary.total_unique_players} 人`);
-  }
-
-  if (sp.length > 0) {
-    summaryCard = `<local:MyCard Title="服务器数据" Margin="0,0,0,15" CanSwap="True" IsSwapped="False">
-    <StackPanel Margin="25,40,23,15">
-        <TextBlock TextWrapping="Wrap" Text="${esc(sp.join("  ·  "))}" />
-    </StackPanel>
-</local:MyCard>`;
-  }
-
   // 建筑展示
   let buildingCard = "";
   if (buildings && buildings.length > 0) {
@@ -349,7 +325,6 @@ ${items}
 ${playerCard}
 ${annCard}
 ${banCard}
-${summaryCard}
 ${buildingCard}
 
 <local:MyCard Title="网页入口" Margin="0,0,0,15" CanSwap="True" IsSwapped="True">
