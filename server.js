@@ -330,7 +330,14 @@ ${items}
                         Text="刷新" EventType="刷新主页" />
             ${launchBtn}
             <local:MyButton Margin="10,0,0,0" Width="80" Height="36" Padding="0" ColorType="Highlight"
-                        Text="回声洞" ToolTip="随机语录" EventType="弹出窗口" EventData="回声洞|${esc(echoQuotes[Math.floor(Math.random() * echoQuotes.length)] || "今天也是方块人的一天！")}" />
+                        Text="回声洞" ToolTip="随机语录">
+                <local:CustomEventService.Events>
+                    <local:CustomEventCollection>
+                        <local:CustomEvent Type="弹出窗口" Data="回声洞|${esc(echoQuotes[Math.floor(Math.random() * echoQuotes.length)] || "今天也是方块人的一天！")}" />
+                        <local:CustomEvent Type="刷新主页" Data="-" />
+                    </local:CustomEventCollection>
+                </local:CustomEventService.Events>
+            </local:MyButton>
         </StackPanel>
         <TextBlock TextWrapping="Wrap" TextAlignment="Center" Foreground="#CCAA55" FontSize="12" Margin="0,14,0,0"
                    Text="Mik Casual 是高版本 Minecraft Java 版公益创造休闲服务器" />
