@@ -3,20 +3,6 @@ setlocal enabledelayedexpansion
 cd /d "%~dp0"
 taskkill /f /im node.exe 2>nul
 
-:: Auto-copy hints.txt to PCL folder if found
-for %%d in (
-    "%LOCALAPPDATA%\PCL"
-    "%APPDATA%\PCL"
-    "D:\PCL"
-    "C:\PCL"
-) do if exist "%%d\PCL.exe" copy /y "%~dp0hints.txt" "%%d\" >nul 2>&1
-
-:: Also copy to PCL folder if hints.txt doesn't exist there
-if exist "hints.txt" (
-    if exist "%LOCALAPPDATA%\PCL\PCL.exe" copy /y "hints.txt" "%LOCALAPPDATA%\PCL\" >nul 2>&1
-    if exist "%APPDATA%\PCL\PCL.exe" copy /y "hints.txt" "%APPDATA%\PCL\" >nul 2>&1
-)
-
 git fetch 2>nul
 git status -uno 2>nul | find "Your branch is behind" >nul
 if %errorlevel% neq 0 (
