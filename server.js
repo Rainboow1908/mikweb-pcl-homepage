@@ -16,11 +16,21 @@
 
 import http from "node:http";
 import https from "node:https";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const PORT = parseInt(process.env.PORT || "38080", 10);
 const API_BASE = process.env.API_BASE || "https://mcmik.top/api";
 const SERVER_ADDR = process.env.SERVER_ADDR || "mcmik.top";
 const DISPLAY_ADDR = process.env.DISPLAY_ADDR || "mikserver.noctiro.moe";
+
+let echoQuotes = [];
+try {
+  echoQuotes = JSON.parse(fs.readFileSync(path.join(__dirname, "echo-quotes.json"), "utf-8"));
+} catch {}
 
 // ── 工具: JSON fetch + 缓存 ──────────────────────────────────────
 
@@ -319,6 +329,8 @@ ${items}
             <local:MyButton Margin="0,0,10,0" Width="90" Height="36" Padding="13,0,13,0"
                         Text="刷新" EventType="刷新主页" />
             ${launchBtn}
+            <local:MyButton Margin="10,0,0,0" Width="36" Height="36" Padding="0" ColorType="Highlight"
+                        Text="🎤" ToolTip="回声洞" EventType="弹出窗口" EventData="回声洞|${esc(echoQuotes[Math.floor(Math.random() * echoQuotes.length)] || "今天也是方块人的一天！")}" />
         </StackPanel>
         <TextBlock TextWrapping="Wrap" TextAlignment="Center" Foreground="#CCAA55" FontSize="12" Margin="0,14,0,0"
                    Text="腐竹辛苦啦！考完就是胜利——分数锁不住你的世界线，前方还有大片未探索的区域。" />
