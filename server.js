@@ -254,7 +254,7 @@ ${items}
             </StackPanel>`,
       )
       .join("\n");
-    banCard = `<local:MyCard Title="封禁列表 (${bans.length})" Margin="0,0,0,15" CanSwap="True" IsSwapped="False">
+    banCard = `<local:MyCard Title="封禁列表 (${bans.length})" Margin="0,0,0,15" CanSwap="True" IsSwapped="True">
     <StackPanel Margin="25,40,23,15">
 ${items}
     </StackPanel>
