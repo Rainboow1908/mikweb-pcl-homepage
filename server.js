@@ -288,6 +288,12 @@ ${items}
 ${items}
     </StackPanel>
 </local:MyCard>`;
+  } else {
+    buildingCard = `<local:MyCard Title="建筑收录" Margin="0,0,0,15" CanSwap="True">
+    <StackPanel Margin="25,40,23,15">
+        <TextBlock TextWrapping="Wrap" Text="暂无建筑数据" />
+    </StackPanel>
+</local:MyCard>`;
   }
 
   // 启动游戏按钮 — 用 \current 表示当前选中的 MC 版本，自动加入服务器
