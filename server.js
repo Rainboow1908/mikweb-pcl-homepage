@@ -301,6 +301,7 @@ ${items}
             <TextBlock Text="●" FontSize="14" Foreground="${esc(statusColor)}" Margin="0,0,6,0" VerticalAlignment="Center" />
             <TextBlock Text="${esc(statusText)}" FontSize="16" Foreground="${esc(statusColor)}" VerticalAlignment="Center" />
             <TextBlock Text="   ${esc(DISPLAY_ADDR)}" FontSize="13" Foreground="#888888" VerticalAlignment="Center" Margin="8,0,0,0" />
+            ${players.peak_online != null ? `<TextBlock Text="  ·  历史峰值 ${players.peak_online} 人" FontSize="13" Foreground="#888888" VerticalAlignment="Center" Margin="4,0,0,0" />` : ""}
         </StackPanel>
         <local:MyHint Text="点击下方按钮即可一键启动游戏并加入服务器！" Theme="Blue" Margin="0,0,0,12" />
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
